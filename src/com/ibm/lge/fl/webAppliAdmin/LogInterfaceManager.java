@@ -1,0 +1,26 @@
+package com.ibm.lge.fl.webAppliAdmin;
+
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Logger;
+
+import com.ibm.lge.fl.util.AdvancedProperties;
+
+public class LogInterfaceManager {
+
+	private Vector<LogInterface> logInterfaces ;
+	
+	public LogInterfaceManager(AdvancedProperties props, String baseProperty, Logger log) {
+		
+		logInterfaces = new Vector<LogInterface>() ;
+		
+		ArrayList<String> logsProperties = props.getKeysElements(baseProperty);
+		for (String lp : logsProperties) {
+			logInterfaces.add(new LogInterface(props, baseProperty + lp, log)) ;
+    	}
+	}
+
+	public Vector<LogInterface> getLogInterfaces() {
+		return logInterfaces ;
+	}
+}

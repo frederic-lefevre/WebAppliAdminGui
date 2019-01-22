@@ -1,0 +1,5 @@
+ { "selections" : 
+       [ { "dimension" : "CustNa",
+            "value" : "Ornage"} ,
+          { "dimension" : "IOT",
+             "value" : "_GEO0002" } ]  }

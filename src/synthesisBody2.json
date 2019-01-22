@@ -1,0 +1,10 @@
+ { "selections" : 
+       [ { "dimension" : "BrdGp",
+            "value" : ["_BRD0007", "_BRD0001"]} ,
+          { "dimension" : "IOT",
+             "value" : ["_GEO0002", "_GEO0001"] },
+          {"dimension" : "SaqSeg",
+            "value" : ["probe"]} ,
+          {"dimension" : "RnkCod",
+            "value" : ["medium"] } ] ,
+   "groupedBy" : "IMT" }
