@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
+import com.ibm.lge.fl.util.swing.SearcherHighLighter;
 import com.ibm.lge.fl.webAppliAdmin.LogInterface;
 import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
 import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteLogs;
@@ -53,6 +54,11 @@ public class LogGui {
 	// Get smart engines infos button
 	private JButton getSeInfoButton ;
 	
+	// Buttons and text field for search
+	private JTextField searchText ;
+	private JButton    searchButton ;
+	private JButton    resetHighLightButton ;
+	
 	// Combo box to choose the log
 	private JComboBox<LogInterface> logList ;
 	
@@ -67,6 +73,8 @@ public class LogGui {
 	private ButtonResponse deleteResizeLogButtonResponse ;
 	private ButtonResponse getOpInfosButtonResponse ;
 	private ButtonResponse getSeInfosButtonResponse ;
+	
+	private SearcherHighLighter searcherHighLighter ;
 	
 	public LogGui(AdvancedProperties adminProperties, Logger l) {
 
@@ -176,11 +184,29 @@ public class LogGui {
 		emptyPanel4.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel4) ;
 		
+		JPanel searchPanel = new JPanel() ;
+		searchPanel.setLayout(new BoxLayout(searchPanel,  BoxLayout.X_AXIS));		
+		searchText = new JTextField(20) ;
+		searchButton = new JButton("Search") ;
+		searchButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
+		resetHighLightButton = new JButton("Reset") ;
+		resetHighLightButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
+		searchPanel.add(searchText) ;
+		searchPanel.add(searchButton) ;
+		searchPanel.add(resetHighLightButton) ;
+		commandPanel.add(searchPanel) ;
+		
+		JPanel emptyPanel5 = new JPanel() ;
+		emptyPanel5.setPreferredSize(new Dimension(200, 100));
+		commandPanel.add(emptyPanel5) ;
+		
 		getButton.addActionListener(new getLogListener());
 		deleteButton.addActionListener(new deleteLogListener());
 		deleteResizeButton.addActionListener(new deleteResizeLogListener());
 		getOpInfoButton.addActionListener(new getOpInfoListener()) ;
 		getSeInfoButton.addActionListener(new getSeInfoListener()) ;
+		searchButton.addActionListener(new searchListener()) ;
+		resetHighLightButton.addActionListener(new resetHighLightListener()) ;
 		
 		// --------------------
 		// Second column : display panel
@@ -203,6 +229,8 @@ public class LogGui {
 		deleteResizeLogButtonResponse  = new ButtonResponse(logContent, deleteResizeButton) ;
 		getOpInfosButtonResponse 	   = new ButtonResponse(logContent, getOpInfoButton) ;
 		getSeInfosButtonResponse 	   = new ButtonResponse(logContent, getSeInfoButton) ;
+		
+		searcherHighLighter = new SearcherHighLighter(logContent, cLog) ;
 	}
 
 	public JPanel getLogPanel() {
@@ -247,6 +275,27 @@ public class LogGui {
 				logContent.setText("Enter a number. " + resizeNumStr + " is not a number");
 				logContent.update(logContent.getGraphics());
 			}
+		}
+	}
+	
+	private class searchListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			String searchStr = searchText.getText() ;
+			
+			if ((searchStr != null) && (! searchStr.isEmpty())) {
+				searcherHighLighter.searchAndHighlight(searchStr, true);
+			}
+		}
+	}
+	
+	private class resetHighLightListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			searchText.setText("") ;
+			searcherHighLighter.removeHighlights() ;			
 		}
 	}
 	
