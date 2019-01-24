@@ -58,6 +58,9 @@ public class LogGui {
 	private JTextField searchText ;
 	private JButton    searchButton ;
 	private JButton    resetHighLightButton ;
+	private JCheckBox  caseSensitive ;
+	private JCheckBox  ignoreAccent ;
+	private JCheckBox  ignoreFormatting ;
 	
 	// Combo box to choose the log
 	private JComboBox<LogInterface> logList ;
@@ -88,7 +91,7 @@ public class LogGui {
 		logPanel.setLayout(new BoxLayout(logPanel, BoxLayout.Y_AXIS));
 
 		JPanel serverChoicePanel = new JPanel() ;
-		// Combo box to choose the log
+		// Combo box to choose the server
 		logList = new JComboBox<LogInterface>(logInterfaces) ;
 		logList.setPreferredSize(new Dimension(400, 50));
 		logList.setMaximumSize(new Dimension(600, 80));
@@ -119,10 +122,12 @@ public class LogGui {
 		gbPanel.add(compressLogs) ;
 		commandPanel.add(gbPanel) ;
 		
+		// Empty panel to add space
 		JPanel emptyPanel1 = new JPanel() ;
 		emptyPanel1.setPreferredSize(new Dimension(200, 10));
 		commandPanel.add(emptyPanel1) ;
 		
+		// Delete panel
 		JPanel dbPanel = new JPanel() ;
 		dbPanel.setLayout(new BoxLayout(dbPanel,  BoxLayout.X_AXIS));
 		deleteButton = new JButton("Delete all in-memory and in-DataBase logs") ;
@@ -131,10 +136,12 @@ public class LogGui {
 		dbPanel.add(deleteButton) ;
 		commandPanel.add(dbPanel) ;
 
+		// Empty panel to add space
 		JPanel emptyPanel2 = new JPanel() ;
 		emptyPanel2.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel2) ;
 		
+		// Delete and resize log panel
 		JPanel dbPanel2 = new JPanel() ;		
 		dbPanel2.setLayout(new BoxLayout(dbPanel2,  BoxLayout.Y_AXIS));
 		dbPanel2.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
@@ -158,10 +165,12 @@ public class LogGui {
 		dbPanel2.add(resizePanel) ;
 		commandPanel.add(dbPanel2) ;
 
+		// Empty panel to add space
 		JPanel emptyPanel2_1 = new JPanel() ;
 		emptyPanel2_1.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel2_1) ;
 		
+		// Get application info
 		JPanel gobPanel = new JPanel() ;
 		gobPanel.setLayout(new BoxLayout(gobPanel,  BoxLayout.X_AXIS));
 		getOpInfoButton = new JButton("Get application information") ;
@@ -169,10 +178,12 @@ public class LogGui {
 		gobPanel.add(getOpInfoButton) ;
 		commandPanel.add(gobPanel) ;
 		
+		// Empty panel to add space
 		JPanel emptyPanel3 = new JPanel() ;
 		emptyPanel3.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel3) ;
 		
+		// Get smart engine infos
 		JPanel gsbPanel = new JPanel() ;
 		gsbPanel.setLayout(new BoxLayout(gsbPanel,  BoxLayout.X_AXIS));
 		getSeInfoButton = new JButton("Get smart engine interfaces infos") ;
@@ -180,10 +191,12 @@ public class LogGui {
 		gsbPanel.add(getSeInfoButton) ;
 		commandPanel.add(gsbPanel) ;
 		
+		// Empty panel to add space
 		JPanel emptyPanel4 = new JPanel() ;
 		emptyPanel4.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel4) ;
 		
+		// Panel to search string in the log
 		JPanel searchPanel = new JPanel() ;
 		searchPanel.setLayout(new BoxLayout(searchPanel,  BoxLayout.X_AXIS));		
 		searchText = new JTextField(20) ;
@@ -191,11 +204,24 @@ public class LogGui {
 		searchButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
 		resetHighLightButton = new JButton("Reset") ;
 		resetHighLightButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
+		JPanel searchOptionPanel = new JPanel() ;
+		searchOptionPanel.setLayout(new BoxLayout(searchOptionPanel,  BoxLayout.Y_AXIS));
+		caseSensitive = new JCheckBox("Case sensitive") ;
+		caseSensitive.setSelected(true);
+		ignoreAccent = new JCheckBox("Ignore accents") ;
+		ignoreAccent.setSelected(false);
+		ignoreFormatting = new JCheckBox("Ignore formatting") ;
+		ignoreFormatting.setSelected(false);
 		searchPanel.add(searchText) ;
 		searchPanel.add(searchButton) ;
-		searchPanel.add(resetHighLightButton) ;
+		searchPanel.add(resetHighLightButton) ;	
+		searchOptionPanel.add(caseSensitive) ;
+		searchOptionPanel.add(ignoreAccent) ;
+		searchOptionPanel.add(ignoreFormatting) ;
+		searchPanel.add(searchOptionPanel) ;
 		commandPanel.add(searchPanel) ;
 		
+		// Empty panel to add space
 		JPanel emptyPanel5 = new JPanel() ;
 		emptyPanel5.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel5) ;
@@ -213,6 +239,7 @@ public class LogGui {
 		JPanel displayPanel = new JPanel() ;
 		displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
 		
+		// Log content
 		logContent = new JTextArea(40, 120);
 		logContent.setEditable(false);
 		logContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -285,7 +312,10 @@ public class LogGui {
 			String searchStr = searchText.getText() ;
 			
 			if ((searchStr != null) && (! searchStr.isEmpty())) {
-				searcherHighLighter.searchAndHighlight(searchStr, true);
+				boolean askCaseSensitive	= caseSensitive.isSelected() ;
+				boolean askIgnoreAccent 	= ignoreAccent.isSelected() ;
+				boolean askIgnoreFormatting = ignoreFormatting.isSelected() ;
+				searcherHighLighter.searchAndHighlight(searchStr, askCaseSensitive, askIgnoreAccent, askIgnoreFormatting);
 			}
 		}
 	}
