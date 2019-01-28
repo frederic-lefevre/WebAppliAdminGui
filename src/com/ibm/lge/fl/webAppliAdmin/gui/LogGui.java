@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import javax.swing.JTextField;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.swing.SearcherHighLighter;
+import com.ibm.lge.fl.util.swing.SearcherHighLighter.SearchElement;
 import com.ibm.lge.fl.webAppliAdmin.LogInterface;
 import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
 import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteLogs;
@@ -40,6 +42,7 @@ public class LogGui {
 	private Vector<LogInterface> logInterfaces ;
 	
 	private JPanel logPanel ;
+	private JPanel commandPanel ;
 	
 	// Get and delete log button
 	private JButton getButton ;
@@ -61,6 +64,10 @@ public class LogGui {
 	private JCheckBox  caseSensitive ;
 	private JCheckBox  ignoreAccent ;
 	private JCheckBox  ignoreFormatting ;
+	private JPanel	   searchResultPanel ;
+	private JPanel 	   searchPanel ;
+	
+	private ArrayList<SearchElement> currentSearches ;
 	
 	// Combo box to choose the log
 	private JComboBox<LogInterface> logList ;
@@ -105,7 +112,7 @@ public class LogGui {
 	
 		// --------------------
 		// First column : command panel
-		JPanel commandPanel = new JPanel() ;
+		commandPanel = new JPanel() ;
 		commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.Y_AXIS));				
 		
 		// Buttons for operation on logs
@@ -197,8 +204,11 @@ public class LogGui {
 		commandPanel.add(emptyPanel4) ;
 		
 		// Panel to search string in the log
-		JPanel searchPanel = new JPanel() ;
-		searchPanel.setLayout(new BoxLayout(searchPanel,  BoxLayout.X_AXIS));		
+		searchPanel = new JPanel() ;
+		searchPanel.setLayout(new BoxLayout(searchPanel,  BoxLayout.Y_AXIS));	
+		searchPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));		
+		JPanel searchPanel1 = new JPanel() ;
+		searchPanel1.setLayout(new BoxLayout(searchPanel1,  BoxLayout.X_AXIS));		
 		searchText = new JTextField(20) ;
 		searchButton = new JButton("Search") ;
 		searchButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
@@ -212,13 +222,17 @@ public class LogGui {
 		ignoreAccent.setSelected(false);
 		ignoreFormatting = new JCheckBox("Ignore formatting") ;
 		ignoreFormatting.setSelected(false);
-		searchPanel.add(searchText) ;
-		searchPanel.add(searchButton) ;
-		searchPanel.add(resetHighLightButton) ;	
+		searchPanel1.add(searchText) ;
+		searchPanel1.add(searchButton) ;
+		searchPanel1.add(resetHighLightButton) ;	
 		searchOptionPanel.add(caseSensitive) ;
 		searchOptionPanel.add(ignoreAccent) ;
 		searchOptionPanel.add(ignoreFormatting) ;
-		searchPanel.add(searchOptionPanel) ;
+		searchPanel1.add(searchOptionPanel) ;
+		searchPanel.add(searchPanel1);
+		searchResultPanel = new JPanel() ;
+		searchResultPanel.setLayout(new BoxLayout(searchResultPanel,  BoxLayout.Y_AXIS));	
+		searchPanel.add(searchResultPanel) ;
 		commandPanel.add(searchPanel) ;
 		
 		// Empty panel to add space
@@ -316,6 +330,28 @@ public class LogGui {
 				boolean askIgnoreAccent 	= ignoreAccent.isSelected() ;
 				boolean askIgnoreFormatting = ignoreFormatting.isSelected() ;
 				searcherHighLighter.searchAndHighlight(searchStr, askCaseSensitive, askIgnoreAccent, askIgnoreFormatting);
+				searchResultPanel.removeAll() ;
+				currentSearches = searcherHighLighter.getCurrentSearches() ;
+				if ((currentSearches != null) && (currentSearches.size() > 0)) {
+					SearchElement latestSearch = currentSearches.get(currentSearches.size()-1) ;
+					latestSearch.diplayFirstResult() ;
+					for (SearchElement searchElem : currentSearches) {
+						JPanel elemPanel = new JPanel() ;
+						elemPanel.setLayout(new BoxLayout(elemPanel,  BoxLayout.X_AXIS));	
+						JLabel searchedStringLbl = new JLabel(searchElem.getSearchedString() + " ") ;
+//						JButton next = new JButton("next") ;
+						JButton next = new JButton("    ") ;
+						next.setBackground(searchElem.getHightLightColor());
+						JLabel occurences = new JLabel(" " + searchElem.getNbOccurences() + " occurences") ;
+						elemPanel.add(searchedStringLbl);
+						elemPanel.add(next) ;
+						elemPanel.add(occurences);
+						searchResultPanel.add(elemPanel) ;
+					}
+					commandPanel.validate();
+					commandPanel.repaint();
+					commandPanel.requestFocus();
+				}
 			}
 		}
 	}
@@ -325,7 +361,10 @@ public class LogGui {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			searchText.setText("") ;
-			searcherHighLighter.removeHighlights() ;			
+			searcherHighLighter.removeHighlights() ;
+			searchResultPanel.removeAll() ;
+			logPanel.validate();
+			logPanel.repaint();
 		}
 	}
 	
