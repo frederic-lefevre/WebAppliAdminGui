@@ -5,8 +5,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -14,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,10 +51,11 @@ public class LogGui {
 	private JPanel logPanel ;
 	private JPanel commandPanel ;
 	
-	// Get and delete log button
+	// Get, save and delete log button
 	private JButton getButton ;
 	private JButton deleteButton ;
 	private JButton deleteResizeButton ;
+	private JButton saveButton ;
 	
 	private JCheckBox compressLogs ;
 	
@@ -121,6 +129,12 @@ public class LogGui {
 		getButton = new JButton("Get logs") ;
 		getButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		gbPanel.add(getButton) ;
+		JPanel emptyPanelLog1 = new JPanel() ;
+		emptyPanelLog1.setPreferredSize(new Dimension(10, 10));
+		gbPanel.add(emptyPanelLog1) ;
+		saveButton = new JButton("Save logs in file") ;
+		saveButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		gbPanel.add(saveButton) ;
 		JPanel emptyPanelLog = new JPanel() ;
 		emptyPanelLog.setPreferredSize(new Dimension(10, 10));
 		gbPanel.add(emptyPanelLog) ;
@@ -241,6 +255,7 @@ public class LogGui {
 		commandPanel.add(emptyPanel5) ;
 		
 		getButton.addActionListener(new getLogListener());
+		saveButton.addActionListener(new saveLogContent());
 		deleteButton.addActionListener(new deleteLogListener());
 		deleteResizeButton.addActionListener(new deleteResizeLogListener());
 		getOpInfoButton.addActionListener(new getOpInfoListener()) ;
@@ -387,6 +402,27 @@ public class LogGui {
 			LogInterface logChoice = (LogInterface)logList.getSelectedItem() ;
 			RequestSmartEngineInformations requestSeInfos = new RequestSmartEngineInformations(logChoice, getSeInfosButtonResponse, cLog) ;
 			requestSeInfos.execute();			
+		}
+	}
+	
+	private class saveLogContent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			JFileChooser logChooser = new JFileChooser() ;
+			logChooser.setApproveButtonText("Save log in file");
+			int saveChoice = logChooser.showOpenDialog(logPanel) ;
+			if (saveChoice == JFileChooser.APPROVE_OPTION) {
+				 File logFile = logChooser.getSelectedFile() ;
+				 
+			      try (BufferedWriter logWriter = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8)){
+			         logContent.write(logWriter);
+			      } catch (Exception e) {
+			         cLog.log(Level.SEVERE, "Exception writing log file", e);
+			      }
+			}
+			
 		}
 	}
 }
