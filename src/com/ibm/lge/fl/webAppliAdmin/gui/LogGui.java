@@ -223,6 +223,7 @@ public class LogGui {
 		JPanel searchPanel1 = new JPanel() ;
 		searchPanel1.setLayout(new BoxLayout(searchPanel1,  BoxLayout.X_AXIS));		
 		searchText = new JTextField(20) ;
+		searchText.setMaximumSize(new Dimension(400, 40));
 		searchButton = new JButton("Search") ;
 		searchButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
 		resetHighLightButton = new JButton("Reset") ;
