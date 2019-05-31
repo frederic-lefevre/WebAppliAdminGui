@@ -12,7 +12,7 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class DeleteLogs  extends SwingWorker<String,String> {
 
-	private LogInterface logChoice ;
+	private final LogInterface logChoice ;
 	private ButtonResponse deleteLogButtonResponse ;
 	private Logger tLog ;
 	
