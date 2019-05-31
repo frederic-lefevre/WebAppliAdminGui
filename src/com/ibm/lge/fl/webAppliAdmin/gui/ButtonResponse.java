@@ -10,8 +10,9 @@ public class ButtonResponse {
 
 	// Text area for the result
 	private JTextArea responseArea ;
-	// Send button
+
 	private JButton sendButton ;
+	
 	public ButtonResponse(JTextArea responseArea, JButton sendButton) {
 		super();
 		this.responseArea = responseArea;
