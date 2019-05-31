@@ -2,14 +2,13 @@ package com.ibm.lge.fl.webAppliAdmin;
 
 public class BodyRequest {
 
-	String bodyName ;
-	String body ;
+	private final String bodyName ;
+	private final String body ;
 	
 	public BodyRequest(String n, String b) {
 		
 		bodyName = n ;
-		body 	 = b ;
-		
+		body 	 = b ;		
 	}
 
 	public String getBodyName() {

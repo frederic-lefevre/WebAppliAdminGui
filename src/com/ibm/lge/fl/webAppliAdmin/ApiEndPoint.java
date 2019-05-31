@@ -18,19 +18,19 @@ public class ApiEndPoint {
 	private final static String BODY_CHARSET_PROP = ".bodyCharset" ;
 	private final static String JSON_FORMAT  	  = ".jsonFormat" ;
 	
-	private String  	  	  	method ;
-	private String  	  	  	path ;
-	private Vector<BodyRequest> bodies ;
-	private Charset 	  	  	charset ;
-	private HmacGenerator 	  	hmacGenerator ;
-	private boolean				jsonFormat ;
+	private final String  	  		  method ;
+	private final String  	  		  path ;
+	private final Vector<BodyRequest> bodies ;
+	private final Charset 	  	  	  charset ;
+	private final HmacGenerator		  hmacGenerator ;
+	private final boolean   		  jsonFormat ;
 
 	public ApiEndPoint(AdvancedProperties props, String baseProperty, Logger sLog) {
 		
 		method 		= props.getProperty(baseProperty + METHOD_PROP) ;
 		path		= props.getProperty(baseProperty + PATH_PROP) ;
 		jsonFormat 	= props.getBoolean(baseProperty + JSON_FORMAT, true) ;
-		bodies	= new Vector<BodyRequest>() ;
+		bodies		= new Vector<BodyRequest>() ;
 		
 		if (props.containsKey(baseProperty + BODY_PROP)) {
 			// only one body
@@ -46,14 +46,16 @@ public class ApiEndPoint {
 			}
 		} 
 		
-		String cs = props.getProperty(baseProperty + CHARSET_PROP) ;
+		String csStr = props.getProperty(baseProperty + CHARSET_PROP) ;
+		Charset cs ;
 		try {
-			charset = Charset.forName(cs) ;
+			cs = Charset.forName(csStr) ;
 		} catch (Exception e) {
 			sLog.log(Level.SEVERE, "Exception when api interface charset. Chartset default to UTF-8", e);
-			charset					= StandardCharsets.UTF_8 ;
+			cs	= StandardCharsets.UTF_8 ;
 		}
-				
+		charset = cs ;
+		
 		hmacGenerator = new HmacGenerator(props, baseProperty, sLog) ;
 	}
 

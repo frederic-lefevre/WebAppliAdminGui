@@ -2,8 +2,8 @@ package com.ibm.lge.fl.webAppliAdmin;
 
 public class Host {
 
-	private String address;
-	private String appPath ;
+	private final String address;
+	private final String appPath ;
 	
 	public Host(String ad, String ap) {
 		address = ad ;

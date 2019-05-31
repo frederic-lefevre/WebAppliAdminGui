@@ -7,7 +7,7 @@ import com.ibm.lge.fl.util.AdvancedProperties;
 
 public class HostManager {
 
-	private Vector<Host> hosts ;
+	private final Vector<Host> hosts ;
 	
 	public HostManager(AdvancedProperties props, String baseProperty) {
 		
@@ -16,7 +16,7 @@ public class HostManager {
 		ArrayList<String> logsProperties = props.getKeysElements(baseProperty);
 		for (String lp : logsProperties) {
 			String address 	= props.getProperty(baseProperty + lp + ".address") ;
-			String appPath		= props.getProperty(baseProperty + lp + ".appPath") ;
+			String appPath	= props.getProperty(baseProperty + lp + ".appPath") ;
 			hosts.add(new Host(address, appPath)) ;
 		}
 	}

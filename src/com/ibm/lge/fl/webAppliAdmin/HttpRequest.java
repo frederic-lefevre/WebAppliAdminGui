@@ -30,14 +30,14 @@ public class HttpRequest {
 	private Logger lLog ;
 	
 	// HMAC element
-	private String uuid ;
+	private final String uuid ;
 	
-	private HmacGenerator hmacGenerator ;
+	private final HmacGenerator hmacGenerator ;
 	
-	private String  urlBase ;
-	private String  method ;
-	private boolean available ;
-	private Charset charset ;
+	private final String  urlBase ;
+	private final String  method ;
+	private final Charset charset ;
+	private       boolean available ;
 	
 	public HttpRequest(String u, String meth, AdvancedProperties props, HmacGenerator hg, Charset cs, Logger log) {
 		

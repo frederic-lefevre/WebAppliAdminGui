@@ -8,7 +8,7 @@ import com.ibm.lge.fl.util.AdvancedProperties;
 
 public class LogInterfaceManager {
 
-	private Vector<LogInterface> logInterfaces ;
+	private final Vector<LogInterface> logInterfaces ;
 	
 	public LogInterfaceManager(AdvancedProperties props, String baseProperty, Logger log) {
 		

@@ -8,7 +8,7 @@ import com.ibm.lge.fl.util.AdvancedProperties;
 
 public class ApiEndPointManager {
 
-	private Vector<ApiEndPoint> apiEndPoints ;
+	private final Vector<ApiEndPoint> apiEndPoints ;
 	
 	public ApiEndPointManager(AdvancedProperties props, String baseProperty, Logger aLog) {
 

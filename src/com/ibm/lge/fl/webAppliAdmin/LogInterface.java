@@ -26,22 +26,22 @@ public class LogInterface {
 	private final static String GETSMINFO_PROP 	= ".getSmartEnginesInfo.url" ;
 	private final static String CHARSET_PROP		= ".charset" ;
 	
-	private String getUrl ;
-	private String deleteUrl ;
-	private String putUrl ;
-	private String getLevelsUrl ;
-	private String getOperatingInfoUrl ;
-	private String getSmartEngInfoUrl ;
-	private String name ;
-	private Logger lLog ;
+	private final String getUrl ;
+	private final String deleteUrl ;
+	private final String putUrl ;
+	private final String getLevelsUrl ;
+	private final String getOperatingInfoUrl ;
+	private final String getSmartEngInfoUrl ;
+	private final String name ;
+	private final Logger lLog ;
 	
-	private HttpRequest getLogApiRequest ;
-	private HttpRequest deleteLogApiRequest ;
-	private HttpRequest deleteResizeLogApiRequest ;
-	private HttpRequest putLogApiRequest ;
-	private HttpRequest getLevelsLogApiRequest ;
-	private HttpRequest getOperatingInfoLogApiRequest ;
-	private HttpRequest getSmartEngInfoLogApiRequest ;
+	private final HttpRequest getLogApiRequest ;
+	private final HttpRequest deleteLogApiRequest ;
+	private final HttpRequest deleteResizeLogApiRequest ;
+	private final HttpRequest putLogApiRequest ;
+	private final HttpRequest getLevelsLogApiRequest ;
+	private final HttpRequest getOperatingInfoLogApiRequest ;
+	private final HttpRequest getSmartEngInfoLogApiRequest ;
 	
 	public LogInterface(AdvancedProperties props, String baseProperty, Logger log) {
 		

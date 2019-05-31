@@ -17,10 +17,10 @@ public class HmacGenerator {
 	private final static String DEVICE 			= "&deviceId=" ;
 	private final static String TIMESTAMP 		= "&timestamp=" ;
 
-	private String algorithm ;
-	private String secretKey ;
-	private String clientId  ;
-	private String uuid ;
+	private final String algorithm ;
+	private final String secretKey ;
+	private final String clientId  ;
+	private final String uuid ;
 	
 	private Logger hLog ;
 	
