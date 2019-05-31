@@ -11,7 +11,6 @@ import javax.swing.JTabbedPane;
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.RunningContext;
 
-
 public class AdminGui extends JFrame {
 
 
@@ -23,8 +22,7 @@ public class AdminGui extends JFrame {
 
 	
 	public static void main(String[] args) {
-		
-		
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,7 +44,7 @@ public class AdminGui extends JFrame {
 		cLog.info("Start Administration for web applications") ;
 		
 		AdvancedProperties adminProperties = adminRunningContext.getProps();
-		AdvancedProperties apiProperties	= adminProperties.getPropertiesFromFile("webAppli.configurationFile") ;
+		AdvancedProperties apiProperties   = adminProperties.getPropertiesFromFile("webAppli.configurationFile") ;
 		
 		setBounds(20, 20, 1600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,14 +56,10 @@ public class AdminGui extends JFrame {
 		TesterGui testerGui 	= new TesterGui(apiProperties, cLog) ;
 		
 		JTabbedPane operationTab = new JTabbedPane() ;
-		operationTab.addTab("Get logs", logGui.getLogPanel());
-		operationTab.addTab("Manage logs", logLevelGui.getLogLevelPanel());
+		operationTab.addTab("Get logs", 		  logGui.getLogPanel());
+		operationTab.addTab("Manage logs", 		  logLevelGui.getLogLevelPanel());
 		operationTab.addTab("API Request Tester", testerGui.getTesterPanel());
 		
-		getContentPane().add(operationTab) ;
-		
-	
+		getContentPane().add(operationTab) ;		
 	}
-	
-
 }
