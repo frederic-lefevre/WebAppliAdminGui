@@ -1,0 +1,15 @@
+{
+	"value": "IOC",
+	"items": false,
+	"syntheses": true,
+	"callerIdentity": "apiTester",
+	"application": "fonda",
+	"categories": [{
+                "name": "Public Sector",
+                "key": "RUB_009112:",
+                "id": "9112",
+                "number": 6,
+                "value": 0
+              }],
+	"maxResults": 10
+}
