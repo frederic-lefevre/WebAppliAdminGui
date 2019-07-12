@@ -14,10 +14,10 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class SetLogLevels  extends SwingWorker<String,String> {
 
-	private LogInterface logChoice ;
-	private String		 logLevelChoice ;
-	private ButtonResponse setLevelButtonResponse ;
-	private Logger tLog ;
+	private final LogInterface   logChoice ;
+	private final String		 logLevelChoice ;
+	private final ButtonResponse setLevelButtonResponse ;
+	private final Logger tLog ;
 	
 	public SetLogLevels(LogInterface logChoice, String logLevelChoice, ButtonResponse setLevelButtonResponse, Logger tLog) {
 		super();

@@ -12,10 +12,10 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestOperatingInfos extends SwingWorker<String,String> {
 
-	private LogInterface logChoice ;
-	private ButtonResponse getOpInfosButtonResponse ;
-	private boolean withIpLookUp ;
-	private Logger tLog ;
+	private final LogInterface logChoice ;
+	private final ButtonResponse getOpInfosButtonResponse ;
+	private final boolean withIpLookUp ;
+	private final Logger tLog ;
 	
 	public RequestOperatingInfos(LogInterface logChoice, boolean il, ButtonResponse getOpInfosButtonResponse, Logger tLog) {
 		super();

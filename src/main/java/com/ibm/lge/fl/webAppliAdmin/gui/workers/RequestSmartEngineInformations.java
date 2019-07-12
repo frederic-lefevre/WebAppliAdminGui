@@ -12,9 +12,9 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestSmartEngineInformations extends SwingWorker<String,String> {
 
-	private LogInterface    logChoice ;
-	private ButtonResponse  getSeInfosButtonResponse ;
-	private Logger 			tLog ;
+	private final LogInterface    logChoice ;
+	private final ButtonResponse  getSeInfosButtonResponse ;
+	private final Logger 			tLog ;
 
 	public RequestSmartEngineInformations(LogInterface lc, ButtonResponse br, Logger l) {
 		super();

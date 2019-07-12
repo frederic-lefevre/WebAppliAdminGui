@@ -21,11 +21,11 @@ public class RequestTester  extends SwingWorker<String,String> {
 	private static final String CONNEXION_UNAVAILABLE = "The connexion is unavailable" ;
 	private static final String NULL_OR_EMPY_RESPONSE = "Null or empty response" ;
 	
-	private AdvancedProperties testerProperties ;
-	private Logger			   tLog ;
-	private ApiEndPoint 	   apiEndPoint ;
-	private String			   url ;
-	private String			   body ;
+	private final AdvancedProperties testerProperties ;
+	private final Logger			 tLog ;
+	private final ApiEndPoint 	     apiEndPoint ;
+	private final String			 url ;
+	private final String			 body ;
 	
 	// Text area for the result
 	private ButtonResponse buttonResponse ;
@@ -89,7 +89,6 @@ public class RequestTester  extends SwingWorker<String,String> {
 		 }
 		 buttonResponse.setResponse(resp) ;
 		 buttonResponse.normalText();			
-
 	 }
 	 
 }

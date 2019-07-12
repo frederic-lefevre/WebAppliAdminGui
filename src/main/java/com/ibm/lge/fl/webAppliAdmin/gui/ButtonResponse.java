@@ -19,8 +19,7 @@ public class ButtonResponse {
 		this.sendButton = sendButton;
 	}
 	
-	 public
-	 void normalText() {
+	 public void normalText() {
 		 Font font = new Font("monospaced", Font.PLAIN, 14);
 		 responseArea.setFont(font) ;
 		 responseArea.setBackground(Color.WHITE) ;

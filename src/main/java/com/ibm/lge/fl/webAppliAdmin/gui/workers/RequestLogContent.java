@@ -11,10 +11,10 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestLogContent  extends SwingWorker<String,String> {
 
-	private LogInterface 	logChoice ;
-	private boolean 		askLogsCompression ;
-	private ButtonResponse  getLogButtonResponse ;
-	private Logger 			tLog ;
+	private final LogInterface 	 logChoice ;
+	private final boolean 		 askLogsCompression ;
+	private final ButtonResponse getLogButtonResponse ;
+	private final Logger 		 tLog ;
 	
 	public RequestLogContent(LogInterface lc, boolean alc, ButtonResponse glbr, Logger l) {
 		super();

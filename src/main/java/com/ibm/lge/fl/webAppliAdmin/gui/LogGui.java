@@ -44,36 +44,36 @@ public class LogGui {
 	
 	private final static String logsBaseProperty = "webAppli.log." ;
 	
-	private LogInterfaceManager logInterfaceManager ;
-	private Vector<LogInterface> logInterfaces ;
+	private final LogInterfaceManager logInterfaceManager ;
+	private final Vector<LogInterface> logInterfaces ;
 	
-	private JPanel logPanel ;
-	private JPanel commandPanel ;
+	private final JPanel logPanel ;
+	private final JPanel commandPanel ;
 	
 	// Get, save and delete log button
-	private JButton getButton ;
-	private JButton deleteButton ;
-	private JButton deleteResizeButton ;
-	private JButton saveButton ;
+	private final JButton getButton ;
+	private final JButton deleteButton ;
+	private final JButton deleteResizeButton ;
+	private final JButton saveButton ;
 	
-	private JCheckBox compressLogs ;
+	private final JCheckBox compressLogs ;
 	
 	// Get operating infos button
-	private JButton getOpInfoButton ;
-	private JCheckBox iPLookUp ;
+	private final JButton getOpInfoButton ;
+	private final JCheckBox iPLookUp ;
 
 	// Get smart engines infos button
-	private JButton getSeInfoButton ;
+	private final JButton getSeInfoButton ;
 	
 	// Buttons and text field for search
-	private JTextField searchText ;
-	private JButton    searchButton ;
-	private JButton    resetHighLightButton ;
-	private JCheckBox  caseSensitive ;
-	private JCheckBox  ignoreAccent ;
-	private JCheckBox  ignoreFormatting ;
-	private JPanel	   searchResultPanel ;
-	private JPanel 	   searchPanel ;
+	private final JTextField searchText ;
+	private final JButton    searchButton ;
+	private final JButton    resetHighLightButton ;
+	private final JCheckBox  caseSensitive ;
+	private final JCheckBox  ignoreAccent ;
+	private final JCheckBox  ignoreFormatting ;
+	private final JPanel	 searchResultPanel ;
+	private final JPanel 	 searchPanel ;
 	
 	private ArrayList<SearchElement> currentSearches ;
 	
@@ -81,18 +81,18 @@ public class LogGui {
 	private JComboBox<LogInterface> logList ;
 	
 	// New size for in-memory buffers
-	private JTextField resizeNum ;
+	private final JTextField resizeNum ;
 	
 	// Information panel (log content and messages)
-	private JTextArea logContent ;
+	private final JTextArea logContent ;
 	
-	private ButtonResponse getLogButtonResponse ;
-	private ButtonResponse deleteLogButtonResponse ;
-	private ButtonResponse deleteResizeLogButtonResponse ;
-	private ButtonResponse getOpInfosButtonResponse ;
-	private ButtonResponse getSeInfosButtonResponse ;
+	private final ButtonResponse getLogButtonResponse ;
+	private final ButtonResponse deleteLogButtonResponse ;
+	private final ButtonResponse deleteResizeLogButtonResponse ;
+	private final ButtonResponse getOpInfosButtonResponse ;
+	private final ButtonResponse getSeInfosButtonResponse ;
 	
-	private SearcherHighLighter searcherHighLighter ;
+	private final SearcherHighLighter searcherHighLighter ;
 	
 	public LogGui(AdvancedProperties adminProperties, Logger l) {
 
@@ -414,20 +414,20 @@ public class LogGui {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			
+
 			JFileChooser logChooser = new JFileChooser() ;
 			logChooser.setApproveButtonText("Save log in file");
 			int saveChoice = logChooser.showOpenDialog(logPanel) ;
 			if (saveChoice == JFileChooser.APPROVE_OPTION) {
-				 File logFile = logChooser.getSelectedFile() ;
-				 
-			      try (BufferedWriter logWriter = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8)){
-			         logContent.write(logWriter);
-			      } catch (Exception e) {
-			         cLog.log(Level.SEVERE, "Exception writing log file", e);
-			      }
+				File logFile = logChooser.getSelectedFile() ;
+
+				try (BufferedWriter logWriter = Files.newBufferedWriter(logFile.toPath(), StandardCharsets.UTF_8)){
+					logContent.write(logWriter);
+				} catch (Exception e) {
+					cLog.log(Level.SEVERE, "Exception writing log file", e);
+				}
 			}
-			
+
 		}
 	}
 }

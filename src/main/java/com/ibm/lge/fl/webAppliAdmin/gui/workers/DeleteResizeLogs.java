@@ -12,10 +12,10 @@ import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class DeleteResizeLogs  extends SwingWorker<String,String> {
 
-	private LogInterface logChoice ;
-	private ButtonResponse deleteResizeLogButtonResponse ;
-	private Logger tLog ;
-	private String newSizeStr ;
+	private final LogInterface logChoice ;
+	private final ButtonResponse deleteResizeLogButtonResponse ;
+	private final Logger tLog ;
+	private final String newSizeStr ;
 	
 	public DeleteResizeLogs(LogInterface lc, ButtonResponse br, String ns, Logger l) {
 		super();

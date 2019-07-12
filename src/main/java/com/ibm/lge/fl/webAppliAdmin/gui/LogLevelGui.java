@@ -31,23 +31,23 @@ public class LogLevelGui {
 	
 	private Logger cLog ;
 	
-	private LogInterfaceManager logInterfaceManager ;
-	private Vector<LogInterface> logInterfaces ;
+	private final LogInterfaceManager logInterfaceManager ;
+	private final Vector<LogInterface> logInterfaces ;
 	
-	private JPanel logLevelPanel ;
+	private final JPanel logLevelPanel ;
 	
 	// Get and change level log button
-	private JButton changeLevelsButton ;
-	private JButton getLevelsButton ;
+	private final JButton changeLevelsButton ;
+	private final JButton getLevelsButton ;
 	
 	// Combo box to choose the log
-	private JComboBox<LogInterface> logList ;
+	private final JComboBox<LogInterface> logList ;
 	
 	// Information panel (log content and messages)
-	private JTextArea logLevelContent ;
+	private final JTextArea logLevelContent ;
 	
-	private ButtonResponse setLevelButtonResponse ;
-	private ButtonResponse getLevelButtonResponse ;
+	private final ButtonResponse setLevelButtonResponse ;
+	private final ButtonResponse getLevelButtonResponse ;
 	
 	public LogLevelGui(AdvancedProperties adminProperties, Logger l) {
 

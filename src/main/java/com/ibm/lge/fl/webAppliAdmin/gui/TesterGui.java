@@ -34,38 +34,38 @@ public class TesterGui {
 	
 	private final static String NO_BODY 					= "No body for this request" ;
 	
-	private JPanel testerPanel ;
+	private final JPanel testerPanel ;
 	
-	private HostManager hostManager ;
-	private Vector<Host> hostValues ;
+	private final HostManager hostManager ;
+	private final Vector<Host> hostValues ;
 	
-	private ApiEndPointManager apiEndPointManager ;
-	private Vector<ApiEndPoint> apiEndPoints ;
+	private final ApiEndPointManager apiEndPointManager ;
+	private final Vector<ApiEndPoint> apiEndPoints ;
 	
 	// Combo box to choose the host
-	private JComboBox<Host> hostList ;
+	private final JComboBox<Host> hostList ;
 	
 	// Combo box to choose the end point
-	private JComboBox<ApiEndPoint> endPointList ;
+	private final JComboBox<ApiEndPoint> endPointList ;
 	
 	// Text field to edit the url
-	private JTextField urlEdit ;
+	private final JTextField urlEdit ;
 	
 	// Text area for the body
-	private JTextArea bodyEdit ;
+	private final JTextArea bodyEdit ;
 	
 	// Text area for the result
-	private JTextArea responseArea ;
+	private final JTextArea responseArea ;
 	
 	// Button to send the request
-	private JButton sendButton ;
+	private final JButton sendButton ;
 	
-	private JComboBox<BodyRequest> bodyList ;
+	private final JComboBox<BodyRequest> bodyList ;
 	
-	private ButtonResponse testerButtonResponse ;
+	private final ButtonResponse testerButtonResponse ;
 	
-	private AdvancedProperties testerProperties ;
-	private Logger tLog ;
+	private final AdvancedProperties testerProperties ;
+	private final Logger tLog ;
 	
 	public TesterGui(AdvancedProperties adminProperties, Logger log) {
 		
