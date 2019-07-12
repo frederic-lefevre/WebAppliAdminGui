@@ -14,11 +14,13 @@ public class RequestOperatingInfos extends SwingWorker<String,String> {
 
 	private LogInterface logChoice ;
 	private ButtonResponse getOpInfosButtonResponse ;
+	private boolean withIpLookUp ;
 	private Logger tLog ;
 	
-	public RequestOperatingInfos(LogInterface logChoice, ButtonResponse getOpInfosButtonResponse, Logger tLog) {
+	public RequestOperatingInfos(LogInterface logChoice, boolean il, ButtonResponse getOpInfosButtonResponse, Logger tLog) {
 		super();
 		this.logChoice = logChoice;
+		withIpLookUp = il ;
 		this.getOpInfosButtonResponse = getOpInfosButtonResponse;
 		this.tLog = tLog;
 	}
@@ -27,7 +29,7 @@ public class RequestOperatingInfos extends SwingWorker<String,String> {
 	protected String doInBackground() throws Exception {
 		
 		getOpInfosButtonResponse.updatingMessage();
-		String ret = logChoice.getOperatingInfos() ;
+		String ret = logChoice.getOperatingInfos(withIpLookUp) ;
 		return formatResponse(ret);
 	}
 	

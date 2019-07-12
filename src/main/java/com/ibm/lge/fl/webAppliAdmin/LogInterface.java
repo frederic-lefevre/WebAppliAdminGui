@@ -175,11 +175,17 @@ public class LogInterface {
 		return logLevelsString ;
 	}
 	
-	public String getOperatingInfos() {
+	public String getOperatingInfos(boolean withIpLookUp) {
 		
+		String queryParam ;
+		if (withIpLookUp) {
+			queryParam = "?IpLookUp=true" ;
+		} else {
+			queryParam = "" ;
+		}
 		String opearatingInfoString  ;		
 		if (getOperatingInfoLogApiRequest.isAvailable()) {			
-			opearatingInfoString = getOperatingInfoLogApiRequest.send("", "").toString() ;		
+			opearatingInfoString = getOperatingInfoLogApiRequest.send(queryParam, "").toString() ;		
 		} else {
 			opearatingInfoString = "Connexion to get operating infos API not available" ;
 		}

@@ -60,6 +60,7 @@ public class LogGui {
 	
 	// Get operating infos button
 	private JButton getOpInfoButton ;
+	private JCheckBox iPLookUp ;
 
 	// Get smart engines infos button
 	private JButton getSeInfoButton ;
@@ -196,6 +197,9 @@ public class LogGui {
 		getOpInfoButton = new JButton("Get application information") ;
 		getOpInfoButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		gobPanel.add(getOpInfoButton) ;
+		iPLookUp = new JCheckBox("with IP addresses look up") ;
+		iPLookUp.setSelected(false);
+		gobPanel.add(iPLookUp) ;
 		commandPanel.add(gobPanel) ;
 		
 		// Empty panel to add space
@@ -389,7 +393,8 @@ public class LogGui {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			LogInterface logChoice = (LogInterface)logList.getSelectedItem() ;
-			RequestOperatingInfos requestOpInfos = new RequestOperatingInfos(logChoice, getOpInfosButtonResponse, cLog) ;
+			boolean withIpLookUp = iPLookUp.isSelected() ;
+			RequestOperatingInfos requestOpInfos = new RequestOperatingInfos(logChoice, withIpLookUp, getOpInfosButtonResponse, cLog) ;
 			requestOpInfos.execute();			
 		}
 	}
