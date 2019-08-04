@@ -99,6 +99,7 @@
                         </execution>
                     </executions>
                     <configuration>
+                    	<dateFormat>yyyy-MM-dd HH:mm:ss Z</dateFormat>
                         <skipPoms>false</skipPoms>
                         <commitIdGenerationMode>flat</commitIdGenerationMode>
                         <injectAllReactorProjects>true</injectAllReactorProjects>
