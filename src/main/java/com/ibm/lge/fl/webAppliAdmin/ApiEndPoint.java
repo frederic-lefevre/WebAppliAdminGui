@@ -51,7 +51,7 @@ public class ApiEndPoint {
 		try {
 			cs = Charset.forName(csStr) ;
 		} catch (Exception e) {
-			sLog.log(Level.SEVERE, "Exception when getting api interface charset. Chartset default to UTF-8", e);
+			sLog.log(Level.SEVERE, "Exception when getting api interface charset with property " + baseProperty + CHARSET_PROP + ". Chartset default to UTF-8", e);
 			cs	= StandardCharsets.UTF_8 ;
 		}
 		charset = cs ;

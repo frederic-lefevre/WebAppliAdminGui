@@ -3,20 +3,26 @@ package com.ibm.lge.fl.webAppliAdmin;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
+import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.RunningContext;
 
 class ApiEndPointTest {
 
 	@Test
-	void test() {
+	void testCharset() {
 		
 		RunningContext runContext = TestUtils.getRunningContext() ;
 		
-		ApiEndPoint apiEndPoint = new ApiEndPoint(runContext.getProps(), "", runContext.getpLog()) ;
-		assertEquals(StandardCharsets.UTF_8.displayName(), apiEndPoint.getCharset().displayName()) ;
+		Properties props = new Properties() ;
+		props.put("test.charset", StandardCharsets.US_ASCII.displayName()) ;
+		AdvancedProperties advProps = new AdvancedProperties(props) ;
+		
+		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test", runContext.getpLog()) ;
+		assertEquals(StandardCharsets.US_ASCII.displayName(), apiEndPoint.getCharset().displayName()) ;
 	}
 
 }
