@@ -33,9 +33,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss z</maven.build.timestamp.format>
-		<about.commit.id>${git.commit.id}</about.commit.id>
-        <about.branch>${git.branch}</about.branch>
-        <about.commit.url>${git.remote.origin.url}/commits/${git.commit.id}</about.commit.url>
 	</properties>
 
 	<build>
