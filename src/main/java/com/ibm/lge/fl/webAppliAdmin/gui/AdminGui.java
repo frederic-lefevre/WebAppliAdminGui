@@ -7,9 +7,12 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.RunningContext;
+import com.ibm.lge.fl.util.swing.ApplicationInfoPane;
 
 public class AdminGui extends JFrame {
 
@@ -20,6 +23,8 @@ public class AdminGui extends JFrame {
 	
 	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties" ;
 
+	private final JTabbedPane 		  operationTab ;
+	private final ApplicationInfoPane appInfoPane ;
 	
 	public static void main(String[] args) {
 			
@@ -54,12 +59,26 @@ public class AdminGui extends JFrame {
 		LogGui logGui 			= new LogGui(apiProperties, cLog) ;
 		LogLevelGui logLevelGui = new LogLevelGui(apiProperties, cLog) ;
 		TesterGui testerGui 	= new TesterGui(apiProperties, cLog) ;
+		appInfoPane 			= new ApplicationInfoPane(adminRunningContext) ;
 		
-		JTabbedPane operationTab = new JTabbedPane() ;
+		operationTab = new JTabbedPane() ;
 		operationTab.addTab("Get logs", 		  logGui.getLogPanel());
 		operationTab.addTab("Manage logs", 		  logLevelGui.getLogLevelPanel());
 		operationTab.addTab("API Request Tester", testerGui.getTesterPanel());
-		
+		operationTab.addTab("Informations", 	  appInfoPane) ;
+
+		operationTab.addChangeListener(new AdminTabChangeListener());
 		getContentPane().add(operationTab) ;		
+	}
+	
+	private class AdminTabChangeListener implements ChangeListener {
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			
+			if (operationTab.getSelectedComponent().equals(appInfoPane)) {
+				appInfoPane.setInfos();
+			}			
+		}
 	}
 }
