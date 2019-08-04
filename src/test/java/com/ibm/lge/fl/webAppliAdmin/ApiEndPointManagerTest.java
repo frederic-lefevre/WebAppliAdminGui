@@ -15,7 +15,7 @@ class ApiEndPointManagerTest {
 		
 		RunningContext runContext = TestUtils.getRunningContext() ;
 		
-		ApiEndPointManager endPointMgr = new ApiEndPointManager(runContext.getProps(), "webAppli", runContext.getpLog()) ;
+		ApiEndPointManager endPointMgr = new ApiEndPointManager(runContext.getProps(), "webAppli.tester.endPoint.", runContext.getpLog()) ;
 		
 		Vector<ApiEndPoint> endPoints = endPointMgr.getApiEndPoints() ;
 		assertNotNull(endPoints) ;
