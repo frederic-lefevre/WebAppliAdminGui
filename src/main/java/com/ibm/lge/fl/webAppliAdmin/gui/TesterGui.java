@@ -258,11 +258,12 @@ public class TesterGui {
 			ApiEndPoint apiEndPoint = (ApiEndPoint)endPointList.getSelectedItem() ;
 			String url  = urlEdit.getText() ;
 			String body = bodyEdit.getText() ;
+			boolean askCompression = compressResponse.isSelected() ; 
 			if (tLog.isLoggable(Level.FINEST)) {
 				tLog.finest("EndPoint =" + apiEndPoint.getName());
 			}
 			
-			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, testerProperties, false, tLog) ;
+			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, testerProperties, askCompression, tLog) ;
 			requestTester.execute();						
 		}
 	}
