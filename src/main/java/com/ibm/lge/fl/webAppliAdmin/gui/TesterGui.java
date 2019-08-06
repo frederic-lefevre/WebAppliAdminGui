@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -60,6 +61,8 @@ public class TesterGui {
 	// Button to send the request
 	private final JButton sendButton ;
 	
+	private final JCheckBox compressResponse ;
+	
 	private final JComboBox<BodyRequest> bodyList ;
 	
 	private final ButtonResponse testerButtonResponse ;
@@ -100,6 +103,11 @@ public class TesterGui {
 		endPointList.setMaximumSize(new Dimension(600, 80));
 		endPointList.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		cPane.add(endPointList) ;
+		
+		// Checkbox to ask for compression
+		compressResponse = new JCheckBox("Ask compression") ;
+		compressResponse.setSelected(false);
+		cPane.add(compressResponse) ;
 		
 		// JPanel for Url and send button
 		JPanel sPane = new JPanel() ;
