@@ -254,7 +254,7 @@ public class TesterGui {
 				tLog.finest("EndPoint =" + apiEndPoint.getName());
 			}
 			
-			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, testerProperties, tLog) ;
+			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, testerProperties, false, tLog) ;
 			requestTester.execute();						
 		}
 	}

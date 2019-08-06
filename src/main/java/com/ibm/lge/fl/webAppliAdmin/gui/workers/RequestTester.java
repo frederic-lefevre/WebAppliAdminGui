@@ -30,7 +30,7 @@ public class RequestTester  extends SwingWorker<String,String> {
 	// Text area for the result
 	private ButtonResponse buttonResponse ;
 	
-	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, AdvancedProperties p, Logger l) {
+	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, AdvancedProperties p, boolean askCompression, Logger l) {
 		
 		apiEndPoint		 = ap ;
 		url				 = u ;
