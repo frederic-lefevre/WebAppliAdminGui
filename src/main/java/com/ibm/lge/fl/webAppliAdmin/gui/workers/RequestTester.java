@@ -26,6 +26,7 @@ public class RequestTester  extends SwingWorker<String,String> {
 	private final ApiEndPoint 	     apiEndPoint ;
 	private final String			 url ;
 	private final String			 body ;
+	private final String			 queryParam ;
 	
 	// Text area for the result
 	private ButtonResponse buttonResponse ;
@@ -38,6 +39,11 @@ public class RequestTester  extends SwingWorker<String,String> {
 		testerProperties = p ;
 		tLog			 = l ;
 		buttonResponse	 = br ;
+		if (askCompression) {
+			queryParam = "?compressReturn=true" ;
+		} else {
+			queryParam = "" ;
+		}
 	}
 
 	 @Override 
@@ -51,7 +57,7 @@ public class RequestTester  extends SwingWorker<String,String> {
 		buttonResponse.updatingMessage() ;
 		HttpRequest sendReq = new HttpRequest(url, method, testerProperties, hmacGenerator, charset, tLog) ;
 		if (sendReq.isAvailable()) {
-			CharBuffer buffer = sendReq.send("", body) ;
+			CharBuffer buffer = sendReq.send(queryParam, body) ;
 			if ((buffer != null) && (buffer.length() > 0)) {
 				int beginBufferLength = Math.max(buffer.length(), 81) - 1 ;
 				buttonResponse.updatingMessage("\n\n  ===> Response received, formatting ...\n" + beginBufferLength + "...", Color.YELLOW) ;
