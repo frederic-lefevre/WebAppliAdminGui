@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class ButtonResponse {
@@ -11,12 +12,22 @@ public class ButtonResponse {
 	// Text area for the result
 	private JTextArea responseArea ;
 
+	private JLabel responseDuration ;
+	
 	private JButton sendButton ;
 	
 	public ButtonResponse(JTextArea responseArea, JButton sendButton) {
 		super();
-		this.responseArea = responseArea;
-		this.sendButton = sendButton;
+		this.responseArea 	  = responseArea ;
+		this.sendButton   	  = sendButton ;
+		this.responseDuration = null ;
+	}
+	
+	public ButtonResponse(JTextArea responseArea, JLabel responseDuration, JButton sendButton) {
+		super();
+		this.responseArea 	  = responseArea;
+		this.responseDuration = responseDuration ;
+		this.sendButton 	  = sendButton ;
 	}
 	
 	 public void normalText() {
@@ -42,5 +53,11 @@ public class ButtonResponse {
 	
 	public void setResponse(String text) {
 		responseArea.setText(text);
+	}
+	
+	public void setDuration(long d) {
+		if (responseDuration != null) {
+			responseDuration.setText(d + " ms") ;
+		}
 	}
 }

@@ -38,17 +38,19 @@ public class HttpRequest {
 	private final String  method ;
 	private final Charset charset ;
 	private       boolean available ;
+	private       long    lastRequestDuration ;
 	
 	public HttpRequest(String u, String meth, AdvancedProperties props, HmacGenerator hg, Charset cs, Logger log) {
 		
 		available = true ;		
 		
-		lLog 	 	  = log ;
-		urlBase 	  = u ;
-		method 	 	  = meth ;
-		charset  	  = cs ;
-		hmacGenerator = hg ;
-		uuid		  = hmacGenerator.getUuid() ;		
+		lLog 	 	  		= log ;
+		urlBase 	  		= u ;
+		method 	 	  		= meth ;
+		charset  	  		= cs ;
+		hmacGenerator 		= hg ;
+		uuid		  		= hmacGenerator.getUuid() ;
+		lastRequestDuration = -1 ;
 	}
 	
 	public CharBuffer send(String pathParam, String body) {
@@ -75,6 +77,7 @@ public class HttpRequest {
 			httpHeaders.add(new HttpHeader(DEVICE_ID, 	  uuid)) ;
 			httpHeaders.add(new HttpHeader(TIMESTAMP, 	  timestamp)) ;
 						
+			long start = System.currentTimeMillis() ;
 			try {
 				// Send the request
 				HttpResponseContent httpResponse  ;
@@ -122,7 +125,8 @@ public class HttpRequest {
 				resp = CharBuffer.wrap("Exception http request on url " + url + " : " + e) ;
 				lLog.log(Level.SEVERE, "Exception in http request send", e);
 			}
-		
+			lastRequestDuration = System.currentTimeMillis() - start ;
+			
 		} catch (URISyntaxException e) {
 			lLog.log(Level.SEVERE, "Malformed url: " + url, e);
 			available = false ;
@@ -132,5 +136,9 @@ public class HttpRequest {
 
 	public boolean isAvailable() {
 		return available;
+	}
+
+	public long getLastRequestDuration() {
+		return lastRequestDuration;
 	}
 }

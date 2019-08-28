@@ -58,6 +58,7 @@ public class RequestTester  extends SwingWorker<String,String> {
 		HttpRequest sendReq = new HttpRequest(url, method, testerProperties, hmacGenerator, charset, tLog) ;
 		if (sendReq.isAvailable()) {
 			CharBuffer buffer = sendReq.send(queryParam, body) ;
+			buttonResponse.setDuration(sendReq.getLastRequestDuration()) ;
 			if ((buffer != null) && (buffer.length() > 0)) {
 				int beginBufferLength = Math.max(buffer.length(), 81) - 1 ;
 				buttonResponse.updatingMessage("\n\n  ===> Response received, formatting ...\n" + beginBufferLength + "...", Color.YELLOW) ;

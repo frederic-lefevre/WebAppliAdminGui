@@ -109,6 +109,16 @@ public class TesterGui {
 		compressResponse.setSelected(false);
 		cPane.add(compressResponse) ;
 		
+		// Execution time
+		JLabel exDurationLbl = new JLabel(" Latest execution duration: ") ;
+		exDurationLbl.setOpaque(true);
+		exDurationLbl.setBackground(Color.WHITE);
+		JLabel exDurationValue = new JLabel() ;
+		exDurationValue.setOpaque(true);
+		exDurationValue.setBackground(Color.WHITE);
+		cPane.add(exDurationLbl) ;
+		cPane.add(exDurationValue) ;
+		
 		// JPanel for Url and send button
 		JPanel sPane = new JPanel() ;
 		sPane.setLayout(new BoxLayout(sPane, BoxLayout.X_AXIS));
@@ -176,7 +186,7 @@ public class TesterGui {
 		JScrollPane scrollResponse =  new JScrollPane(responseArea) ;
 		rPane.add(scrollResponse) ;
 		
-		testerButtonResponse = new ButtonResponse(responseArea, sendButton) ;
+		testerButtonResponse = new ButtonResponse(responseArea, exDurationValue, sendButton) ;
 	}
 
 	public JPanel getTesterPanel() {
