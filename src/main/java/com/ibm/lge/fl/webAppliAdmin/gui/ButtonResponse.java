@@ -56,8 +56,14 @@ public class ButtonResponse {
 	}
 	
 	public void setDuration(long d) {
-		if (responseDuration != null) {
-			responseDuration.setText(d + " ms") ;
+		if (responseDuration != null) {			
+			responseDuration.setText(formatDuration(d)) ;
 		}
+	}
+	
+	private String formatDuration(long dur) {
+		long ms = dur / 1000000 ;
+		long ns = dur % 1000000 ;
+		return ms + "ms " + ns + "ns" ;
 	}
 }

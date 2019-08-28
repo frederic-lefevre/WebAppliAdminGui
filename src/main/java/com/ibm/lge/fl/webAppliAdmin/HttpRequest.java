@@ -77,7 +77,7 @@ public class HttpRequest {
 			httpHeaders.add(new HttpHeader(DEVICE_ID, 	  uuid)) ;
 			httpHeaders.add(new HttpHeader(TIMESTAMP, 	  timestamp)) ;
 						
-			long start = System.currentTimeMillis() ;
+			long start = System.nanoTime() ;
 			try {
 				// Send the request
 				HttpResponseContent httpResponse  ;
@@ -125,7 +125,7 @@ public class HttpRequest {
 				resp = CharBuffer.wrap("Exception http request on url " + url + " : " + e) ;
 				lLog.log(Level.SEVERE, "Exception in http request send", e);
 			}
-			lastRequestDuration = System.currentTimeMillis() - start ;
+			lastRequestDuration = System.nanoTime() - start ;
 			
 		} catch (URISyntaxException e) {
 			lLog.log(Level.SEVERE, "Malformed url: " + url, e);
