@@ -15,7 +15,7 @@ public class RequestLogContent  extends SwingWorker<String,String> {
 	private final boolean 		 askLogsCompression ;
 	private final ButtonResponse getLogButtonResponse ;
 	private final Logger 		 tLog ;
-	
+
 	public RequestLogContent(LogInterface lc, boolean alc, ButtonResponse glbr, Logger l) {
 		super();
 		logChoice 			 = lc;
@@ -26,19 +26,20 @@ public class RequestLogContent  extends SwingWorker<String,String> {
 
 	@Override
 	protected String doInBackground() throws Exception {
-	
+
 		getLogButtonResponse.updatingMessage();
 		return logChoice.get(askLogsCompression);
 	}
-	 @Override 
-	 public void done() {
-		 try {
-			 getLogButtonResponse.setResponse(get()) ;
-			 getLogButtonResponse.normalText();			
+
+	@Override 
+	public void done() {
+		try {
+			getLogButtonResponse.setResponse(get()) ;
+			getLogButtonResponse.normalText();			
 		} catch (InterruptedException e) {
 			tLog.log(Level.SEVERE, "InterruptedException getting response", e);
 		} catch (ExecutionException e) {
 			tLog.log(Level.SEVERE, "ExecutionException getting response", e);
 		}
-	 }
+	}
 }
