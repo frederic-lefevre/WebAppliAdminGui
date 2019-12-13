@@ -6,13 +6,10 @@ import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.RunningContext;
-import com.ibm.lge.fl.util.swing.ApplicationInfoPane;
+import com.ibm.lge.fl.util.swing.ApplicationTabbedPane;
 
 public class AdminGui extends JFrame {
 
@@ -23,9 +20,6 @@ public class AdminGui extends JFrame {
 	
 	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties" ;
 
-	private final JTabbedPane 		  operationTab ;
-	private final ApplicationInfoPane appInfoPane ;
-	
 	public static void main(String[] args) {
 			
 		EventQueue.invokeLater(new Runnable() {
@@ -59,26 +53,15 @@ public class AdminGui extends JFrame {
 		LogGui logGui 			= new LogGui(apiProperties, cLog) ;
 		LogLevelGui logLevelGui = new LogLevelGui(apiProperties, cLog) ;
 		TesterGui testerGui 	= new TesterGui(apiProperties, cLog) ;
-		appInfoPane 			= new ApplicationInfoPane(adminRunningContext) ;
 		
-		operationTab = new JTabbedPane() ;
-		operationTab.addTab("Get logs", 		  logGui.getLogPanel());
-		operationTab.addTab("Manage logs", 		  logLevelGui.getLogLevelPanel());
-		operationTab.addTab("API Request Tester", testerGui.getTesterPanel());
-		operationTab.addTab("Informations", 	  appInfoPane) ;
+		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext) ;
+		operationTab.add(logGui.getLogPanel(), 			 "Get rest api logs", 	 0);
+		operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
+		operationTab.add(testerGui.getTesterPanel(), 	 "API Request Tester", 	 2);
 
-		operationTab.addChangeListener(new AdminTabChangeListener());
+		operationTab.setSelectedIndex(0) ;
+		
 		getContentPane().add(operationTab) ;		
 	}
 	
-	private class AdminTabChangeListener implements ChangeListener {
-
-		@Override
-		public void stateChanged(ChangeEvent arg0) {
-			
-			if (operationTab.getSelectedComponent().equals(appInfoPane)) {
-				appInfoPane.setInfos();
-			}			
-		}
-	}
 }
