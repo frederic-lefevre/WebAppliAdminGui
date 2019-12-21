@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +21,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.util.swing.SearcherHighLighter;
-import com.ibm.lge.fl.util.swing.SearcherHighLighter.SearchElement;
+import com.ibm.lge.fl.util.swing.SearchableTextPane;
 import com.ibm.lge.fl.webAppliAdmin.LogInterface;
 import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
 import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteLogs;
@@ -65,18 +62,6 @@ public class LogGui {
 	// Get smart engines infos button
 	private final JButton getSeInfoButton ;
 	
-	// Buttons and text field for search
-	private final JTextField searchText ;
-	private final JButton    searchButton ;
-	private final JButton    resetHighLightButton ;
-	private final JCheckBox  caseSensitive ;
-	private final JCheckBox  ignoreAccent ;
-	private final JCheckBox  ignoreFormatting ;
-	private final JPanel	 searchResultPanel ;
-	private final JPanel 	 searchPanel ;
-	
-	private ArrayList<SearchElement> currentSearches ;
-	
 	// Combo box to choose the log
 	private JComboBox<LogInterface> logList ;
 	
@@ -86,13 +71,13 @@ public class LogGui {
 	// Information panel (log content and messages)
 	private final JTextArea logContent ;
 	
+	private final SearchableTextPane searchableTextArea ;
+	
 	private final ButtonResponse getLogButtonResponse ;
 	private final ButtonResponse deleteLogButtonResponse ;
 	private final ButtonResponse deleteResizeLogButtonResponse ;
 	private final ButtonResponse getOpInfosButtonResponse ;
 	private final ButtonResponse getSeInfosButtonResponse ;
-	
-	private final SearcherHighLighter searcherHighLighter ;
 	
 	public LogGui(AdvancedProperties adminProperties, Logger l) {
 
@@ -115,12 +100,21 @@ public class LogGui {
 		logPanel.add(serverChoicePanel) ;
 		
 		JPanel mainPane = new JPanel() ;
-		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.X_AXIS));
+		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.X_AXIS)) ;
 		logPanel.add(mainPane) ;
 	
+		// Log content
+		logContent = new JTextArea(40, 120) ;
+		logContent.setEditable(false) ;
+		logContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
+		logContent.setText("\n\n ===> Choose a log target and an operation <===") ;
+		
+		searchableTextArea = new SearchableTextPane(logContent, cLog) ;
+		mainPane.add(searchableTextArea) ;
+		
 		// --------------------
-		// First column : command panel
-		commandPanel = new JPanel() ;
+		// Add controls to first column : command panel
+		commandPanel = searchableTextArea.getCommandPanel() ;
 		commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.Y_AXIS));				
 		
 		// Buttons for operation on logs
@@ -220,39 +214,6 @@ public class LogGui {
 		emptyPanel4.setPreferredSize(new Dimension(200, 100));
 		commandPanel.add(emptyPanel4) ;
 		
-		// Panel to search string in the log
-		searchPanel = new JPanel() ;
-		searchPanel.setLayout(new BoxLayout(searchPanel,  BoxLayout.Y_AXIS));	
-		searchPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));		
-		JPanel searchPanel1 = new JPanel() ;
-		searchPanel1.setLayout(new BoxLayout(searchPanel1,  BoxLayout.X_AXIS));		
-		searchText = new JTextField(20) ;
-		searchText.setMaximumSize(new Dimension(400, 40));
-		searchButton = new JButton("Search") ;
-		searchButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
-		resetHighLightButton = new JButton("Reset") ;
-		resetHighLightButton.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
-		JPanel searchOptionPanel = new JPanel() ;
-		searchOptionPanel.setLayout(new BoxLayout(searchOptionPanel,  BoxLayout.Y_AXIS));
-		caseSensitive = new JCheckBox("Case sensitive") ;
-		caseSensitive.setSelected(true);
-		ignoreAccent = new JCheckBox("Ignore accents") ;
-		ignoreAccent.setSelected(false);
-		ignoreFormatting = new JCheckBox("Ignore formatting") ;
-		ignoreFormatting.setSelected(false);
-		searchPanel1.add(searchText) ;
-		searchPanel1.add(searchButton) ;
-		searchPanel1.add(resetHighLightButton) ;	
-		searchOptionPanel.add(caseSensitive) ;
-		searchOptionPanel.add(ignoreAccent) ;
-		searchOptionPanel.add(ignoreFormatting) ;
-		searchPanel1.add(searchOptionPanel) ;
-		searchPanel.add(searchPanel1);
-		searchResultPanel = new JPanel() ;
-		searchResultPanel.setLayout(new BoxLayout(searchResultPanel,  BoxLayout.Y_AXIS));	
-		searchPanel.add(searchResultPanel) ;
-		commandPanel.add(searchPanel) ;
-		
 		// Empty panel to add space
 		JPanel emptyPanel5 = new JPanel() ;
 		emptyPanel5.setPreferredSize(new Dimension(200, 100));
@@ -264,25 +225,6 @@ public class LogGui {
 		deleteResizeButton.addActionListener(new deleteResizeLogListener());
 		getOpInfoButton.addActionListener(new getOpInfoListener()) ;
 		getSeInfoButton.addActionListener(new getSeInfoListener()) ;
-		searchButton.addActionListener(new searchListener()) ;
-		resetHighLightButton.addActionListener(new resetHighLightListener()) ;
-		
-		// --------------------
-		// Second column : display panel
-		JPanel displayPanel = new JPanel() ;
-		displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
-		
-		// Log content
-		logContent = new JTextArea(40, 120);
-		logContent.setEditable(false);
-		logContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		JScrollPane scrollPane1 = new JScrollPane(logContent) ;
-		logContent.setText("\n\n ===> Choose a log target and an operation <===");
-		displayPanel.add(scrollPane1) ;
-		
-		// Add the command and display panels to the main window
-		mainPane.add(commandPanel) ;
-		mainPane.add(displayPanel) ;
 		
 		getLogButtonResponse     	   = new ButtonResponse(logContent, getButton) ;
 		deleteLogButtonResponse  	   = new ButtonResponse(logContent, deleteButton) ;
@@ -290,7 +232,6 @@ public class LogGui {
 		getOpInfosButtonResponse 	   = new ButtonResponse(logContent, getOpInfoButton) ;
 		getSeInfosButtonResponse 	   = new ButtonResponse(logContent, getSeInfoButton) ;
 		
-		searcherHighLighter = new SearcherHighLighter(logContent, cLog) ;
 	}
 
 	public JPanel getLogPanel() {
@@ -335,55 +276,6 @@ public class LogGui {
 				logContent.setText("Enter a number. " + resizeNumStr + " is not a number");
 				logContent.update(logContent.getGraphics());
 			}
-		}
-	}
-	
-	private class searchListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String searchStr = searchText.getText() ;
-			
-			if ((searchStr != null) && (! searchStr.isEmpty())) {
-				boolean askCaseSensitive	= caseSensitive.isSelected() ;
-				boolean askIgnoreAccent 	= ignoreAccent.isSelected() ;
-				boolean askIgnoreFormatting = ignoreFormatting.isSelected() ;
-				searcherHighLighter.searchAndHighlight(searchStr, askCaseSensitive, askIgnoreAccent, askIgnoreFormatting);
-				searchResultPanel.removeAll() ;
-				currentSearches = searcherHighLighter.getCurrentSearches() ;
-				if ((currentSearches != null) && (currentSearches.size() > 0)) {
-					SearchElement latestSearch = currentSearches.get(currentSearches.size()-1) ;
-					latestSearch.diplayFirstResult() ;
-					for (SearchElement searchElem : currentSearches) {
-						JPanel elemPanel = new JPanel() ;
-						elemPanel.setLayout(new BoxLayout(elemPanel,  BoxLayout.X_AXIS));	
-						JLabel searchedStringLbl = new JLabel(searchElem.getSearchedString() + " ") ;
-//						JButton next = new JButton("next") ;
-						JButton next = new JButton("    ") ;
-						next.setBackground(searchElem.getHightLightColor());
-						JLabel occurences = new JLabel(" " + searchElem.getNbOccurences() + " occurences") ;
-						elemPanel.add(searchedStringLbl);
-						elemPanel.add(next) ;
-						elemPanel.add(occurences);
-						searchResultPanel.add(elemPanel) ;
-					}
-					commandPanel.validate();
-					commandPanel.repaint();
-					commandPanel.requestFocus();
-				}
-			}
-		}
-	}
-	
-	private class resetHighLightListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			searchText.setText("") ;
-			searcherHighLighter.removeHighlights() ;
-			searchResultPanel.removeAll() ;
-			logPanel.validate();
-			logPanel.repaint();
 		}
 	}
 	
