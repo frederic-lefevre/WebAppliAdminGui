@@ -25,7 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.util.swing.SearchableTextPane;
+import com.ibm.lge.fl.util.swing.text.SearchableTextPane;
 import com.ibm.lge.fl.webAppliAdmin.LogInterface;
 import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
 import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteLogs;
