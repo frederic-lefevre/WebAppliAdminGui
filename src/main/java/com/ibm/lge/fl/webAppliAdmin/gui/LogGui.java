@@ -79,6 +79,8 @@ public class LogGui {
 	private final ButtonResponse getOpInfosButtonResponse ;
 	private final ButtonResponse getSeInfosButtonResponse ;
 	
+	private final static Color[] SEARCH_HIGHLIGHTCOLORS = {Color.CYAN, Color.LIGHT_GRAY, Color.YELLOW, Color.MAGENTA} ;
+	
 	public LogGui(AdvancedProperties adminProperties, Logger l) {
 
 		cLog = l ;
@@ -109,7 +111,7 @@ public class LogGui {
 		logContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)) ;
 		logContent.setText("\n\n ===> Choose a log target and an operation <===") ;
 		
-		searchableTextArea = new SearchableTextPane(logContent, cLog) ;
+		searchableTextArea = new SearchableTextPane(logContent, SEARCH_HIGHLIGHTCOLORS, cLog) ;
 		mainPane.add(searchableTextArea) ;
 		
 		// --------------------
