@@ -32,7 +32,7 @@ public class SetLogLevels  extends SwingWorker<String,String> {
 		setLevelButtonResponse.updatingMessage();
 		String ret ; 
 		try {
-			JsonObject levelJsonResp = new JsonParser().parse(logLevelChoice).getAsJsonObject() ;
+			JsonObject levelJsonResp = JsonParser.parseString(logLevelChoice).getAsJsonObject() ;
 			JsonObject levelJson = levelJsonResp.get("data").getAsJsonObject() ;
 			ret = logChoice.changeLevel(levelJson) ;
 		} catch (Exception e) {

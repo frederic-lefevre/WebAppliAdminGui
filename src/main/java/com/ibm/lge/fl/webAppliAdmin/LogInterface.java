@@ -92,7 +92,7 @@ public class LogInterface {
 				logString = resp.toString() ;
 			
 				try {
-					JsonObject jso = new JsonParser().parse(logString).getAsJsonObject() ;
+					JsonObject jso = JsonParser.parseString(logString).getAsJsonObject() ;
 					String rc = jso.get(OPERATION).getAsString() ;
 					if (rc.equals(OK)) {
 						logString = jso.get(DATA).getAsString() ;
