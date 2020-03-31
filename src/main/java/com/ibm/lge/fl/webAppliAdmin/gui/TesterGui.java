@@ -67,12 +67,10 @@ public class TesterGui {
 	
 	private final ButtonResponse testerButtonResponse ;
 	
-	private final AdvancedProperties testerProperties ;
 	private final Logger tLog ;
 	
 	public TesterGui(AdvancedProperties adminProperties, Logger log) {
 		
-		testerProperties = adminProperties ;
 		tLog = log ;
 		
 		hostManager = new HostManager(adminProperties, testerHostBaseProperty) ;
@@ -273,7 +271,7 @@ public class TesterGui {
 				tLog.finest("EndPoint =" + apiEndPoint.getName());
 			}
 			
-			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, testerProperties, askCompression, tLog) ;
+			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, askCompression, tLog) ;
 			requestTester.execute();						
 		}
 	}

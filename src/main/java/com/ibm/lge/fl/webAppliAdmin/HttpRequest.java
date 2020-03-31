@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.HttpContentTypeHeader;
 import com.ibm.lge.fl.util.HttpHeader;
 import com.ibm.lge.fl.util.HttpLink;
@@ -40,7 +39,7 @@ public class HttpRequest {
 	private       boolean available ;
 	private       long    lastRequestDuration ;
 	
-	public HttpRequest(String u, String meth, AdvancedProperties props, HmacGenerator hg, Charset cs, Logger log) {
+	public HttpRequest(String u, String meth, HmacGenerator hg, Charset cs, Logger log) {
 		
 		available = true ;		
 		

@@ -66,13 +66,13 @@ public class LogInterface {
 		
 		HmacGenerator hmacGenerator = new HmacGenerator(props, baseProperty, lLog) ;
 		
-		getLogApiRequest 			  = new HttpRequest(getUrl, 	 		 HttpRequest.GET_METHOD,	props, hmacGenerator, charset, lLog) ;
-		deleteLogApiRequest 		  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, props, hmacGenerator, charset, lLog) ;
-		deleteResizeLogApiRequest	  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, props, hmacGenerator, charset, lLog) ;
-		putLogApiRequest			  = new HttpRequest(putUrl, 	 		 HttpRequest.PUT_METHOD, 	props, hmacGenerator, charset, lLog) ;
-		getLevelsLogApiRequest		  = new HttpRequest(getLevelsUrl,		 HttpRequest.GET_METHOD, 	props, hmacGenerator, charset, lLog) ;
-		getOperatingInfoLogApiRequest = new HttpRequest(getOperatingInfoUrl, HttpRequest.GET_METHOD, 	props, hmacGenerator, charset, lLog) ;	
-		getSmartEngInfoLogApiRequest  = new HttpRequest(getSmartEngInfoUrl,  HttpRequest.GET_METHOD, 	props, hmacGenerator, charset, lLog) ;	
+		getLogApiRequest 			  = new HttpRequest(getUrl, 	 		 HttpRequest.GET_METHOD,	hmacGenerator, charset, lLog) ;
+		deleteLogApiRequest 		  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, hmacGenerator, charset, lLog) ;
+		deleteResizeLogApiRequest	  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, hmacGenerator, charset, lLog) ;
+		putLogApiRequest			  = new HttpRequest(putUrl, 	 		 HttpRequest.PUT_METHOD, 	hmacGenerator, charset, lLog) ;
+		getLevelsLogApiRequest		  = new HttpRequest(getLevelsUrl,		 HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;
+		getOperatingInfoLogApiRequest = new HttpRequest(getOperatingInfoUrl, HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
+		getSmartEngInfoLogApiRequest  = new HttpRequest(getSmartEngInfoUrl,  HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
 
 	}
 

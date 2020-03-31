@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingWorker;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.json.JsonUtils;
 import com.ibm.lge.fl.webAppliAdmin.ApiEndPoint;
 import com.ibm.lge.fl.webAppliAdmin.HmacGenerator;
@@ -21,7 +20,6 @@ public class RequestTester  extends SwingWorker<String,String> {
 	private static final String CONNEXION_UNAVAILABLE = "The connexion is unavailable" ;
 	private static final String NULL_OR_EMPY_RESPONSE = "Null or empty response" ;
 	
-	private final AdvancedProperties testerProperties ;
 	private final Logger			 tLog ;
 	private final ApiEndPoint 	     apiEndPoint ;
 	private final String			 url ;
@@ -31,12 +29,11 @@ public class RequestTester  extends SwingWorker<String,String> {
 	// Text area for the result
 	private ButtonResponse buttonResponse ;
 	
-	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, AdvancedProperties p, boolean askCompression, Logger l) {
+	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, boolean askCompression, Logger l) {
 		
 		apiEndPoint		 = ap ;
 		url				 = u ;
 		body			 = b ;
-		testerProperties = p ;
 		tLog			 = l ;
 		buttonResponse	 = br ;
 		if (askCompression) {
@@ -55,7 +52,7 @@ public class RequestTester  extends SwingWorker<String,String> {
 		Charset charset 			= apiEndPoint.getCharset() ;
 		
 		buttonResponse.updatingMessage() ;
-		HttpRequest sendReq = new HttpRequest(url, method, testerProperties, hmacGenerator, charset, tLog) ;
+		HttpRequest sendReq = new HttpRequest(url, method, hmacGenerator, charset, tLog) ;
 		if (sendReq.isAvailable()) {
 			CharBuffer buffer = sendReq.send(queryParam, body) ;
 			buttonResponse.setDuration(sendReq.getLastRequestDuration()) ;
