@@ -1,19 +1,21 @@
 package com.ibm.lge.fl.webAppliAdmin;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ibm.lge.fl.util.HttpContentTypeHeader;
-import com.ibm.lge.fl.util.HttpHeader;
-import com.ibm.lge.fl.util.HttpLink;
-import com.ibm.lge.fl.util.HttpResponseContent;
+import com.ibm.lge.fl.util.HttpUtils;
 
-public class HttpRequest {
+public class HttpExchange {
 
 	// HTTP methods
 	public final static String GET_METHOD 	  = "GET" ; 
@@ -26,6 +28,14 @@ public class HttpRequest {
 	private final static String DEVICE_ID 	  = "Device-Id" ;
 	private final static String TIMESTAMP 	  = "Timestamp" ;
 	
+	// Some useful string for http content type headers 
+	private final static String CONTENT_TYPE 	= "Content-Type" ;
+	private final static String APPLICATION_JSON = "application/json" ;
+	private final static String CHAR_SET = ";charset=" ;
+
+	// Request time out in seconds
+	private final static long REQUEST_TIME_OUT = 120 ;
+	
 	private Logger lLog ;
 	
 	// HMAC element
@@ -33,17 +43,19 @@ public class HttpRequest {
 	
 	private final HmacGenerator hmacGenerator ;
 	
-	private final String  urlBase ;
-	private final String  method ;
-	private final Charset charset ;
-	private       boolean available ;
-	private       long    lastRequestDuration ;
+	private final HttpClient httpClient ;	
+	private final String  	 urlBase ;
+	private final String  	 method ;
+	private final Charset 	 charset ;
+	private       boolean 	 available ;
+	private       long    	 lastRequestDuration ;
 	
-	public HttpRequest(String u, String meth, HmacGenerator hg, Charset cs, Logger log) {
+	public HttpExchange(HttpClient hc, String u, String meth, HmacGenerator hg, Charset cs, Logger log) {
 		
 		available = true ;		
 		
 		lLog 	 	  		= log ;
+		httpClient			= hc ;
 		urlBase 	  		= u ;
 		method 	 	  		= meth ;
 		charset  	  		= cs ;
@@ -52,18 +64,17 @@ public class HttpRequest {
 		lastRequestDuration = -1 ;
 	}
 	
-	public CharBuffer send(String pathParam, String body) {
+	public String send(String pathParam, String body) {
 		
 		String url = urlBase ;
 		if ((pathParam != null) && (! pathParam.isEmpty())) {
 			url = url + pathParam ;
 		} 
 		
-		HttpLink urlLinkConnexion = new HttpLink(url, charset, lLog) ;
-		
-		CharBuffer resp = null ;
+		CharBuffer resp ;
 		try {
 			URI uri = new URI(url) ;
+			
 			String path = uri.getPath() ;
 				
 			// Build HMAC http header
@@ -71,53 +82,60 @@ public class HttpRequest {
 			String timestamp = Long.toString(ts) ;
 			
 			String hmac = hmacGenerator.generate(method, path, timestamp) ;
-			ArrayList<HttpHeader> httpHeaders = new ArrayList<HttpHeader>() ;
-			httpHeaders.add(new HttpHeader(AUTHORIZATION, hmac)) ;
-			httpHeaders.add(new HttpHeader(DEVICE_ID, 	  uuid)) ;
-			httpHeaders.add(new HttpHeader(TIMESTAMP, 	  timestamp)) ;
+			
+			HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder()
+			        .uri(uri) 
+			        .setHeader(AUTHORIZATION, hmac)
+			        .setHeader(DEVICE_ID, 	  uuid)
+			        .setHeader(TIMESTAMP, 	  timestamp)
+			        .timeout(Duration.ofSeconds(REQUEST_TIME_OUT));
 						
 			long start = System.nanoTime() ;
 			try {
 				// Send the request
-				HttpResponseContent httpResponse  ;
+				
+				HttpRequest httpRequest ;
 				switch (method) {
 				case GET_METHOD : 
-					httpResponse = urlLinkConnexion.sendGet( httpHeaders, true ) ;
+					httpRequest = httpRequestBuilder.GET().build() ;					
 					break ;
 				case POST_METHOD :
-					httpHeaders.add(new HttpContentTypeHeader(HttpContentTypeHeader.APPLICATION_JSON, charset)) ; 
-					httpResponse = urlLinkConnexion.sendPost(body, httpHeaders, true ) ;
+					httpRequest = httpRequestBuilder.setHeader(CONTENT_TYPE, APPLICATION_JSON + CHAR_SET + charset.name())
+											.POST(HttpRequest.BodyPublishers.ofString(body))
+											.build() ;
 					break ;
 				case PUT_METHOD :
-					httpHeaders.add(new HttpContentTypeHeader(HttpContentTypeHeader.APPLICATION_JSON, charset))  ;
-					httpResponse = urlLinkConnexion.sendPut(body, httpHeaders, true ) ;
+					httpRequest = httpRequestBuilder.setHeader(CONTENT_TYPE, APPLICATION_JSON + CHAR_SET + charset.name())
+											.PUT(HttpRequest.BodyPublishers.ofString(body))
+											.build() ;
 					break ;
 				case DELETE_METHOD : 
-					httpResponse = urlLinkConnexion.sendDelete( httpHeaders, true ) ;
+					httpRequest = httpRequestBuilder.GET().build() ;
 					break ;
 				default : 
-					httpResponse = null ;
-					lLog.warning("Unknown HTTP method requested :\n" + method);
+					httpRequest = null ;
+					lLog.severe("Unknown HTTP method requested :\n" + method);
 					break ;
 				}
+				HttpResponse<InputStream> response = httpClient.send(httpRequest, BodyHandlers.ofInputStream()) ;
 				
 				// check the response
-				if (httpResponse != null) {
-					if (! httpResponse.isResponseReceived()) {
-						resp = CharBuffer.wrap("No response received:\n" + httpResponse.toString()) ;
-						lLog.warning(resp.toString());
-					} else if (! httpResponse.isResponseCodeSucces()) {
-						resp = CharBuffer.wrap("Bad HTTP response code:\n" + httpResponse.toString()) ;
+				if (response != null) {
+					if (! HttpUtils.isResponseCodeSucces(response)) {
+						resp = CharBuffer.wrap("Bad HTTP response code:\n" + HttpUtils.readHttpResponseInfos(response)) ;
 						lLog.warning(resp.toString());						
 					} else {
-						resp = httpResponse.getContent() ;
+						resp = HttpUtils.readHttpResponse(response, charset, lLog) ;
+
 						if (lLog.isLoggable(Level.FINEST)) {
-							lLog.fine("Success HTTP response code from request:\n" + httpResponse.toString());
+							lLog.fine("Success HTTP response code from request:\n" 
+										+  HttpUtils.readHttpResponseInfos(response) + "\n\n"
+										+ resp.toString());
 						}
 					}
 				} else {
 					resp = CharBuffer.wrap("Null http response to " + method + " " + url) ;
-					lLog.warning(resp.toString());					
+					lLog.severe(resp.toString());					
 				}
 				
 			} catch (Exception e) {
@@ -127,10 +145,11 @@ public class HttpRequest {
 			lastRequestDuration = System.nanoTime() - start ;
 			
 		} catch (URISyntaxException e) {
+			resp = CharBuffer.wrap( "Malformed url: " + url + " : " + e) ;
 			lLog.log(Level.SEVERE, "Malformed url: " + url, e);
 			available = false ;
 		}
-		return resp ;
+		return resp.toString() ;
 	}
 
 	public boolean isAvailable() {

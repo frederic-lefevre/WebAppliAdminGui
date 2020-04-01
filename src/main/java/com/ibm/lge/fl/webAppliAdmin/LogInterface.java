@@ -1,6 +1,6 @@
 package com.ibm.lge.fl.webAppliAdmin;
 
-import java.nio.CharBuffer;
+import java.net.http.HttpClient;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
@@ -35,13 +35,15 @@ public class LogInterface {
 	private final String name ;
 	private final Logger lLog ;
 	
-	private final HttpRequest getLogApiRequest ;
-	private final HttpRequest deleteLogApiRequest ;
-	private final HttpRequest deleteResizeLogApiRequest ;
-	private final HttpRequest putLogApiRequest ;
-	private final HttpRequest getLevelsLogApiRequest ;
-	private final HttpRequest getOperatingInfoLogApiRequest ;
-	private final HttpRequest getSmartEngInfoLogApiRequest ;
+	private final HttpExchange getLogApiRequest ;
+	private final HttpExchange deleteLogApiRequest ;
+	private final HttpExchange deleteResizeLogApiRequest ;
+	private final HttpExchange putLogApiRequest ;
+	private final HttpExchange getLevelsLogApiRequest ;
+	private final HttpExchange getOperatingInfoLogApiRequest ;
+	private final HttpExchange getSmartEngInfoLogApiRequest ;
+	
+	private final static HttpClient httpClient = HttpClient.newHttpClient() ;
 	
 	public LogInterface(AdvancedProperties props, String baseProperty, Logger log) {
 		
@@ -66,13 +68,13 @@ public class LogInterface {
 		
 		HmacGenerator hmacGenerator = new HmacGenerator(props, baseProperty, lLog) ;
 		
-		getLogApiRequest 			  = new HttpRequest(getUrl, 	 		 HttpRequest.GET_METHOD,	hmacGenerator, charset, lLog) ;
-		deleteLogApiRequest 		  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, hmacGenerator, charset, lLog) ;
-		deleteResizeLogApiRequest	  = new HttpRequest(deleteUrl,			 HttpRequest.DELETE_METHOD, hmacGenerator, charset, lLog) ;
-		putLogApiRequest			  = new HttpRequest(putUrl, 	 		 HttpRequest.PUT_METHOD, 	hmacGenerator, charset, lLog) ;
-		getLevelsLogApiRequest		  = new HttpRequest(getLevelsUrl,		 HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;
-		getOperatingInfoLogApiRequest = new HttpRequest(getOperatingInfoUrl, HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
-		getSmartEngInfoLogApiRequest  = new HttpRequest(getSmartEngInfoUrl,  HttpRequest.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
+		getLogApiRequest 			  = new HttpExchange(httpClient,	getUrl, 	 		 HttpExchange.GET_METHOD,	hmacGenerator, charset, lLog) ;
+		deleteLogApiRequest 		  = new HttpExchange(httpClient,	deleteUrl,			 HttpExchange.DELETE_METHOD, hmacGenerator, charset, lLog) ;
+		deleteResizeLogApiRequest	  = new HttpExchange(httpClient,	deleteUrl,			 HttpExchange.DELETE_METHOD, hmacGenerator, charset, lLog) ;
+		putLogApiRequest			  = new HttpExchange(httpClient,	putUrl, 	 		 HttpExchange.PUT_METHOD, 	hmacGenerator, charset, lLog) ;
+		getLevelsLogApiRequest		  = new HttpExchange(httpClient,	getLevelsUrl,		 HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;
+		getOperatingInfoLogApiRequest = new HttpExchange(httpClient,	getOperatingInfoUrl, HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
+		getSmartEngInfoLogApiRequest  = new HttpExchange(httpClient,	getSmartEngInfoUrl,  HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
 
 	}
 
@@ -87,9 +89,8 @@ public class LogInterface {
 			} else {
 				queryParam = "" ;
 			}
-			CharBuffer resp = getLogApiRequest.send(queryParam,"") ;
-			if (resp != null) {
-				logString = resp.toString() ;
+			logString = getLogApiRequest.send(queryParam,"") ;
+			if (logString != null) {
 			
 				try {
 					JsonObject jso = JsonParser.parseString(logString).getAsJsonObject() ;
@@ -116,7 +117,7 @@ public class LogInterface {
 		
 		String logString ;
 		if (deleteLogApiRequest.isAvailable()) {			
-			logString = deleteLogApiRequest.send("","").toString() ; 					
+			logString = deleteLogApiRequest.send("","") ; 					
 		} else {
 			logString = "Connexion to delete log API not available" ;
 		}
@@ -127,7 +128,7 @@ public class LogInterface {
 		
 		String logString ;
 		if (deleteResizeLogApiRequest.isAvailable()) {
-			logString = deleteResizeLogApiRequest.send("/" + newSize, "").toString() ; 					
+			logString = deleteResizeLogApiRequest.send("/" + newSize, "") ; 					
 		} else {
 			logString = "Connexion to delete log API not available" ;
 		}
@@ -149,7 +150,7 @@ public class LogInterface {
 			
 			try {
 				
-				logString = putLogApiRequest.send("", logParamJson.toString()).toString() ;
+				logString = putLogApiRequest.send("", logParamJson.toString()) ;
 								
 			} catch (Exception e) {
 				logString = "Exception in put log send" + e.getMessage() ;
@@ -167,7 +168,7 @@ public class LogInterface {
 				
 		String logLevelsString  ;		
 		if (getLevelsLogApiRequest.isAvailable()) {			
-			logLevelsString = getLevelsLogApiRequest.send("", "").toString() ;		
+			logLevelsString = getLevelsLogApiRequest.send("", "") ;		
 		} else {
 			logLevelsString = "Connexion to get levels log API not available" ;
 		}
@@ -185,7 +186,7 @@ public class LogInterface {
 		}
 		String opearatingInfoString  ;		
 		if (getOperatingInfoLogApiRequest.isAvailable()) {			
-			opearatingInfoString = getOperatingInfoLogApiRequest.send(queryParam, "").toString() ;		
+			opearatingInfoString = getOperatingInfoLogApiRequest.send(queryParam, "") ;		
 		} else {
 			opearatingInfoString = "Connexion to get operating infos API not available" ;
 		}
@@ -197,7 +198,7 @@ public class LogInterface {
 		
 		String smartEnginesInfoString  ;		
 		if (getOperatingInfoLogApiRequest.isAvailable()) {			
-			smartEnginesInfoString = getSmartEngInfoLogApiRequest.send("", "").toString() ;		
+			smartEnginesInfoString = getSmartEngInfoLogApiRequest.send("", "") ;		
 		} else {
 			smartEnginesInfoString = "Connexion to get smart engines infos API not available" ;
 		}
