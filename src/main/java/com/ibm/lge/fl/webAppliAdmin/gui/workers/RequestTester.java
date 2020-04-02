@@ -1,7 +1,7 @@
 package com.ibm.lge.fl.webAppliAdmin.gui.workers;
 
 import java.awt.Color;
-import java.nio.CharBuffer;
+import java.net.http.HttpClient;
 import java.nio.charset.Charset;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -12,7 +12,7 @@ import javax.swing.SwingWorker;
 import com.ibm.lge.fl.util.json.JsonUtils;
 import com.ibm.lge.fl.webAppliAdmin.ApiEndPoint;
 import com.ibm.lge.fl.webAppliAdmin.HmacGenerator;
-import com.ibm.lge.fl.webAppliAdmin.HttpRequest;
+import com.ibm.lge.fl.webAppliAdmin.HttpExchange;
 import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestTester  extends SwingWorker<String,String> {
@@ -20,6 +20,8 @@ public class RequestTester  extends SwingWorker<String,String> {
 	private static final String CONNEXION_UNAVAILABLE = "The connexion is unavailable" ;
 	private static final String NULL_OR_EMPY_RESPONSE = "Null or empty response" ;
 	
+	private final static HttpClient httpClient = HttpClient.newHttpClient() ;
+		
 	private final Logger			 tLog ;
 	private final ApiEndPoint 	     apiEndPoint ;
 	private final String			 url ;
@@ -52,18 +54,18 @@ public class RequestTester  extends SwingWorker<String,String> {
 		Charset charset 			= apiEndPoint.getCharset() ;
 		
 		buttonResponse.updatingMessage() ;
-		HttpRequest sendReq = new HttpRequest(url, method, hmacGenerator, charset, tLog) ;
+		HttpExchange sendReq = new HttpExchange(httpClient, url, method, hmacGenerator, charset, tLog) ;
 		if (sendReq.isAvailable()) {
-			CharBuffer buffer = sendReq.send(queryParam, body) ;
+			String buffer = sendReq.send(queryParam, body) ;
 			buttonResponse.setDuration(sendReq.getLastRequestDuration()) ;
 			if ((buffer != null) && (buffer.length() > 0)) {
 				int beginBufferLength = Math.max(buffer.length(), 81) - 1 ;
 				buttonResponse.updatingMessage("\n\n  ===> Response received, formatting ...\n" + beginBufferLength + "...", Color.YELLOW) ;
-				String rawString = buffer.toString() ;
+				
 				if (apiEndPoint.isJsonFormat()) {
-					response = formatResponse(rawString) ;
+					response = formatResponse(buffer) ;
 				} else {
-					response = rawString ;
+					response = buffer ;
 				}
 			} else {
 				response = NULL_OR_EMPY_RESPONSE  ;
