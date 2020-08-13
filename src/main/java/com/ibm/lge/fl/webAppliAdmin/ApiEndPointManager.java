@@ -1,6 +1,6 @@
 package com.ibm.lge.fl.webAppliAdmin;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -14,7 +14,7 @@ public class ApiEndPointManager {
 
 		apiEndPoints = new Vector<ApiEndPoint>() ;
 		
-		ArrayList<String> logsProperties = props.getKeysElements(baseProperty);
+		List<String> logsProperties = props.getKeysElements(baseProperty);
 		for (String lp : logsProperties) {
 			apiEndPoints.add(new ApiEndPoint(props, baseProperty + lp, aLog)) ;
 		}

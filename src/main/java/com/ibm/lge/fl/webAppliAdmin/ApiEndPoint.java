@@ -2,7 +2,7 @@ package com.ibm.lge.fl.webAppliAdmin;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +37,7 @@ public class ApiEndPoint {
 			Charset bodyCharset = getBodyCharset(props, baseProperty, sLog) ;
 			bodies.add(new BodyRequest("body", props.getFileContent(baseProperty + BODY_PROP, bodyCharset))) ;
 		} else {
-			ArrayList<String> bodyProps = props.getKeysElements(baseProperty + BODY_PROP + ".") ;
+			List<String> bodyProps = props.getKeysElements(baseProperty + BODY_PROP + ".") ;
 			if (! bodyProps.isEmpty()) {
 				Charset bodyCharset = getBodyCharset(props, baseProperty, sLog) ;
 				for (String bp : bodyProps) {

@@ -1,6 +1,6 @@
 package com.ibm.lge.fl.webAppliAdmin;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
@@ -13,7 +13,7 @@ public class HostManager {
 		
 		hosts = new Vector<Host>() ;
 		
-		ArrayList<String> logsProperties = props.getKeysElements(baseProperty);
+		List<String> logsProperties = props.getKeysElements(baseProperty);
 		for (String lp : logsProperties) {
 			String address 	= props.getProperty(baseProperty + lp + ".address") ;
 			String appPath	= props.getProperty(baseProperty + lp + ".appPath") ;
