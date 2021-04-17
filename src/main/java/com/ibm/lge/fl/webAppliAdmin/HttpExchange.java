@@ -128,7 +128,7 @@ public class HttpExchange {
 						resp = HttpUtils.readHttpResponse(response, charset, lLog) ;
 
 						if (lLog.isLoggable(Level.FINEST)) {
-							lLog.fine("Success HTTP response code from request:\n" 
+							lLog.finest("Success HTTP response code from request:\n" 
 										+  HttpUtils.readHttpResponseInfos(response) + "\n\n"
 										+ resp.toString());
 						}

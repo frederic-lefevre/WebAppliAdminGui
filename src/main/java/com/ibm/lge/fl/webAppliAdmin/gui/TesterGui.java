@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -267,9 +266,7 @@ public class TesterGui {
 			String url  = urlEdit.getText() ;
 			String body = bodyEdit.getText() ;
 			boolean askCompression = compressResponse.isSelected() ; 
-			if (tLog.isLoggable(Level.FINEST)) {
-				tLog.finest("EndPoint =" + apiEndPoint.getName());
-			}
+			tLog.finest(() -> "EndPoint =" + apiEndPoint.getName());
 			
 			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, askCompression, tLog) ;
 			requestTester.execute();						

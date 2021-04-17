@@ -100,9 +100,7 @@ public class LogInterface {
 					}
 				} catch (Exception e) {
 					// must be a simple text response, not json
-					if (lLog.isLoggable(Level.FINE)) {
-						lLog.log(Level.FINE, "Exception in json parsing get log response. Response will be considered as plain text ", e);
-					}
+					lLog.log(Level.FINE, "Exception in json parsing get log response. Response will be considered as plain text ", e);
 				}
 			} else {
 				logString = "null response. See application logs." ;
