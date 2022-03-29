@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin;
+package org.fl.webAppliAdmin;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.RunningContext;

@@ -1,11 +1,10 @@
-package com.ibm.lge.fl.webAppliAdmin;
+package org.fl.webAppliAdmin;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import org.fl.webAppliAdmin.ApiEndPoint;
 import org.junit.jupiter.api.Test;
 
 import com.ibm.lge.fl.util.AdvancedProperties;
