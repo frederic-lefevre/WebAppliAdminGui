@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui.workers;
+package org.fl.webAppliAdmin.gui.workers;
 
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -6,11 +6,12 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingWorker;
 
+import org.fl.webAppliAdmin.LogInterface;
+import org.fl.webAppliAdmin.gui.ButtonResponse;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ibm.lge.fl.util.json.JsonUtils;
-import com.ibm.lge.fl.webAppliAdmin.LogInterface;
-import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class SetLogLevels  extends SwingWorker<String,String> {
 

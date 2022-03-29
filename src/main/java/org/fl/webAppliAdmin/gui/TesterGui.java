@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui;
+package org.fl.webAppliAdmin.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,13 +19,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.fl.webAppliAdmin.ApiEndPoint;
+import org.fl.webAppliAdmin.ApiEndPointManager;
+import org.fl.webAppliAdmin.BodyRequest;
+import org.fl.webAppliAdmin.Host;
+import org.fl.webAppliAdmin.HostManager;
+import org.fl.webAppliAdmin.gui.workers.RequestTester;
+
 import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.webAppliAdmin.ApiEndPoint;
-import com.ibm.lge.fl.webAppliAdmin.ApiEndPointManager;
-import com.ibm.lge.fl.webAppliAdmin.BodyRequest;
-import com.ibm.lge.fl.webAppliAdmin.Host;
-import com.ibm.lge.fl.webAppliAdmin.HostManager;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.RequestTester;
 
 public class TesterGui {
 

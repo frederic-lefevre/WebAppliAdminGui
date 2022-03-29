@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin;
+package org.fl.webAppliAdmin;
 
 import java.net.http.HttpClient;
 import java.nio.charset.Charset;

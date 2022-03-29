@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui;
+package org.fl.webAppliAdmin.gui;
 
 import java.awt.Color;
 import java.awt.Font;

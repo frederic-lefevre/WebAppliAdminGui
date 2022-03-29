@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin;
+package org.fl.webAppliAdmin;
 
 import java.util.Base64;
 import java.util.logging.Level;

@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui;
+package org.fl.webAppliAdmin.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,11 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.fl.webAppliAdmin.LogInterface;
+import org.fl.webAppliAdmin.LogInterfaceManager;
+import org.fl.webAppliAdmin.gui.workers.RequestLogLevel;
+import org.fl.webAppliAdmin.gui.workers.SetLogLevels;
+
 import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.webAppliAdmin.LogInterface;
-import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.RequestLogLevel;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.SetLogLevels;
 
 public class LogLevelGui {
 

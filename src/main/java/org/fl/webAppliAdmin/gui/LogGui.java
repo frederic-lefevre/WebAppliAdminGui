@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui;
+package org.fl.webAppliAdmin.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,15 +24,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.fl.webAppliAdmin.LogInterface;
+import org.fl.webAppliAdmin.LogInterfaceManager;
+import org.fl.webAppliAdmin.gui.workers.DeleteLogs;
+import org.fl.webAppliAdmin.gui.workers.DeleteResizeLogs;
+import org.fl.webAppliAdmin.gui.workers.RequestLogContent;
+import org.fl.webAppliAdmin.gui.workers.RequestOperatingInfos;
+import org.fl.webAppliAdmin.gui.workers.RequestSmartEngineInformations;
+
 import com.ibm.lge.fl.util.AdvancedProperties;
 import com.ibm.lge.fl.util.swing.text.SearchableTextPane;
-import com.ibm.lge.fl.webAppliAdmin.LogInterface;
-import com.ibm.lge.fl.webAppliAdmin.LogInterfaceManager;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteLogs;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.DeleteResizeLogs;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.RequestLogContent;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.RequestOperatingInfos;
-import com.ibm.lge.fl.webAppliAdmin.gui.workers.RequestSmartEngineInformations;
 
 
 public class LogGui {

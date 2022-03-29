@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Vector;
 
+import org.fl.webAppliAdmin.ApiEndPoint;
+import org.fl.webAppliAdmin.ApiEndPointManager;
 import org.junit.jupiter.api.Test;
 
 import com.ibm.lge.fl.util.AdvancedProperties;

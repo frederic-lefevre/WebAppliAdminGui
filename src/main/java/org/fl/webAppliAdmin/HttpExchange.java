@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin;
+package org.fl.webAppliAdmin;
 
 import java.io.InputStream;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package com.ibm.lge.fl.webAppliAdmin.gui.workers;
+package org.fl.webAppliAdmin.gui.workers;
 
 import java.awt.Color;
 import java.net.http.HttpClient;
@@ -9,11 +9,12 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingWorker;
 
+import org.fl.webAppliAdmin.ApiEndPoint;
+import org.fl.webAppliAdmin.HmacGenerator;
+import org.fl.webAppliAdmin.HttpExchange;
+import org.fl.webAppliAdmin.gui.ButtonResponse;
+
 import com.ibm.lge.fl.util.json.JsonUtils;
-import com.ibm.lge.fl.webAppliAdmin.ApiEndPoint;
-import com.ibm.lge.fl.webAppliAdmin.HmacGenerator;
-import com.ibm.lge.fl.webAppliAdmin.HttpExchange;
-import com.ibm.lge.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestTester  extends SwingWorker<String,String> {
 
