@@ -20,7 +20,7 @@ import org.fl.webAppliAdmin.LogInterfaceManager;
 import org.fl.webAppliAdmin.gui.workers.RequestLogLevel;
 import org.fl.webAppliAdmin.gui.workers.SetLogLevels;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 public class LogLevelGui {
 

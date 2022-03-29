@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 import org.fl.webAppliAdmin.LogInterface;
 import org.fl.webAppliAdmin.gui.ButtonResponse;
 
-import com.ibm.lge.fl.util.json.JsonUtils;
+import org.fl.util.json.JsonUtils;
 
 public class RequestOperatingInfos extends SwingWorker<String,String> {
 

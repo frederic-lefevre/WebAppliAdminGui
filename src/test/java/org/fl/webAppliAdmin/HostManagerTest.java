@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 class HostManagerTest {
 

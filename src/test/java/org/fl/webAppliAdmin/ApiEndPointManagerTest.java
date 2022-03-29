@@ -6,8 +6,8 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.util.RunningContext;
+import org.fl.util.AdvancedProperties;
+import org.fl.util.RunningContext;
 
 class ApiEndPointManagerTest {
 

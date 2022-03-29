@@ -11,7 +11,7 @@ import org.fl.webAppliAdmin.gui.ButtonResponse;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ibm.lge.fl.util.json.JsonUtils;
+import org.fl.util.json.JsonUtils;
 
 public class SetLogLevels  extends SwingWorker<String,String> {
 

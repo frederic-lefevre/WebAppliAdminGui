@@ -3,7 +3,7 @@ package org.fl.webAppliAdmin;
 import java.util.List;
 import java.util.Vector;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 public class HostManager {
 

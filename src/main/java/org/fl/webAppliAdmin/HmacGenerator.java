@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 public class HmacGenerator {
 

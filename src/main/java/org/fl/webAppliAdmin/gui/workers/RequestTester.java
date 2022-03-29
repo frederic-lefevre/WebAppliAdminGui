@@ -14,7 +14,7 @@ import org.fl.webAppliAdmin.HmacGenerator;
 import org.fl.webAppliAdmin.HttpExchange;
 import org.fl.webAppliAdmin.gui.ButtonResponse;
 
-import com.ibm.lge.fl.util.json.JsonUtils;
+import org.fl.util.json.JsonUtils;
 
 public class RequestTester  extends SwingWorker<String,String> {
 

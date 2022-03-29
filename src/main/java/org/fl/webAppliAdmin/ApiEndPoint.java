@@ -7,7 +7,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 public class ApiEndPoint {
 

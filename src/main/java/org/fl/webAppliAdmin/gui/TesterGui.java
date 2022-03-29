@@ -26,7 +26,7 @@ import org.fl.webAppliAdmin.Host;
 import org.fl.webAppliAdmin.HostManager;
 import org.fl.webAppliAdmin.gui.workers.RequestTester;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
+import org.fl.util.AdvancedProperties;
 
 public class TesterGui {
 

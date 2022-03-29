@@ -32,8 +32,8 @@ import org.fl.webAppliAdmin.gui.workers.RequestLogContent;
 import org.fl.webAppliAdmin.gui.workers.RequestOperatingInfos;
 import org.fl.webAppliAdmin.gui.workers.RequestSmartEngineInformations;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.util.swing.text.SearchableTextPane;
+import org.fl.util.AdvancedProperties;
+import org.fl.util.swing.text.SearchableTextPane;
 
 
 public class LogGui {

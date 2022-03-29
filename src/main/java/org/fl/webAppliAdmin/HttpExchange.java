@@ -13,7 +13,7 @@ import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ibm.lge.fl.util.HttpUtils;
+import org.fl.util.HttpUtils;
 
 public class HttpExchange {
 

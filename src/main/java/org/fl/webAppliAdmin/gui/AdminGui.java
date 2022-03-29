@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import com.ibm.lge.fl.util.AdvancedProperties;
-import com.ibm.lge.fl.util.RunningContext;
-import com.ibm.lge.fl.util.swing.ApplicationTabbedPane;
+import org.fl.util.AdvancedProperties;
+import org.fl.util.RunningContext;
+import org.fl.util.swing.ApplicationTabbedPane;
 
 public class AdminGui extends JFrame {
 
