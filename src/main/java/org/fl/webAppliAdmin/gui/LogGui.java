@@ -48,6 +48,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.fl.webAppliAdmin.Control;
 import org.fl.webAppliAdmin.LogInterface;
 import org.fl.webAppliAdmin.LogInterfaceManager;
 import org.fl.webAppliAdmin.gui.workers.DeleteLogs;
@@ -62,7 +63,7 @@ import org.fl.util.swing.text.SearchableTextPane;
 
 public class LogGui {
 
-	private Logger cLog ;
+	private static final Logger cLog = Control.getLogger();
 	
 	private final static String logsBaseProperty = "webAppli.log." ;
 	
@@ -106,9 +107,8 @@ public class LogGui {
 	
 	private final static Color[] SEARCH_HIGHLIGHTCOLORS = {Color.CYAN, Color.LIGHT_GRAY, Color.YELLOW, Color.MAGENTA} ;
 	
-	public LogGui(AdvancedProperties adminProperties, Logger l) {
+	public LogGui(AdvancedProperties adminProperties) {
 
-		cLog = l ;
 		logInterfaceManager = new LogInterfaceManager(adminProperties, logsBaseProperty, cLog) ;
 		
 		logInterfaces = logInterfaceManager.getLogInterfaces() ;

@@ -41,8 +41,6 @@ public class AdminGui extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Logger cLog ;
-
 	public static void main(String[] args) {
 			
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +60,7 @@ public class AdminGui extends JFrame {
 		// access to properties and logger
 		Control.init();
 		RunningContext adminRunningContext = Control.getRunningContext();
-		cLog = Control.getLogger();
+		Logger cLog = Control.getLogger();
 
 		cLog.info("Start Administration for web applications") ;
 		
@@ -74,7 +72,7 @@ public class AdminGui extends JFrame {
 		setTitle("Administration console for web application application") ;
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
-		LogGui logGui 			= new LogGui(apiProperties, cLog) ;
+		LogGui logGui 			= new LogGui(apiProperties) ;
 		LogLevelGui logLevelGui = new LogLevelGui(apiProperties, cLog) ;
 		TesterGui testerGui 	= new TesterGui(apiProperties, cLog) ;
 		
