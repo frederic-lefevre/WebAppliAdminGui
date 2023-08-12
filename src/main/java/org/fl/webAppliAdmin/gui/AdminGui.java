@@ -34,6 +34,7 @@ import javax.swing.JFrame;
 import org.fl.util.AdvancedProperties;
 import org.fl.util.RunningContext;
 import org.fl.util.swing.ApplicationTabbedPane;
+import org.fl.webAppliAdmin.Control;
 
 public class AdminGui extends JFrame {
 
@@ -41,8 +42,6 @@ public class AdminGui extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static Logger cLog ;
-	
-	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties" ;
 
 	public static void main(String[] args) {
 			
@@ -61,8 +60,9 @@ public class AdminGui extends JFrame {
 	public AdminGui() {
 		
 		// access to properties and logger
-		RunningContext adminRunningContext = new RunningContext("Administration for web applications", null, DEFAULT_PROP_FILE);
-		cLog = adminRunningContext.getpLog() ;
+		Control.init();
+		RunningContext adminRunningContext = Control.getRunningContext();
+		cLog = Control.getLogger();
 
 		cLog.info("Start Administration for web applications") ;
 		
