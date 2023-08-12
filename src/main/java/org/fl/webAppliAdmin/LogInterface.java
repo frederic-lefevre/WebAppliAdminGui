@@ -37,132 +37,139 @@ import org.fl.util.AdvancedProperties;
 public class LogInterface {
 	
 	// JSON response fields and values
-	private final static String OPERATION 	= "operation" ;
-	private final static String OK 			= "OK" ;
-	private final static String DATA		= "data" ;
-		
-	private final static String NAME_PROP 		= ".name" ;
-	private final static String GET_PROP 		= ".get.url" ;
-	private final static String DELETE_PROP 	= ".delete.url" ;
-	private final static String PUT_PROP 		= ".put.url" ;
-	private final static String GETLEVELS_PROP 	= ".getLevels.url" ;
-	private final static String GETOPINFO_PROP 	= ".getOperatingInfo.url" ;
-	private final static String GETSMINFO_PROP 	= ".getSmartEnginesInfo.url" ;
-	private final static String CHARSET_PROP		= ".charset" ;
-	
-	private final String getUrl ;
-	private final String deleteUrl ;
-	private final String putUrl ;
-	private final String getLevelsUrl ;
-	private final String getOperatingInfoUrl ;
-	private final String getSmartEngInfoUrl ;
-	private final String name ;
-	private final Logger lLog ;
-	
-	private final HttpExchange getLogApiRequest ;
-	private final HttpExchange deleteLogApiRequest ;
-	private final HttpExchange deleteResizeLogApiRequest ;
-	private final HttpExchange putLogApiRequest ;
-	private final HttpExchange getLevelsLogApiRequest ;
-	private final HttpExchange getOperatingInfoLogApiRequest ;
-	private final HttpExchange getSmartEngInfoLogApiRequest ;
-	
-	private final static HttpClient httpClient = HttpClient.newHttpClient() ;
+	private final static String OPERATION = "operation";
+	private final static String OK = "OK";
+	private final static String DATA = "data";
+
+	private final static String NAME_PROP = ".name";
+	private final static String GET_PROP = ".get.url";
+	private final static String DELETE_PROP = ".delete.url";
+	private final static String PUT_PROP = ".put.url";
+	private final static String GETLEVELS_PROP = ".getLevels.url";
+	private final static String GETOPINFO_PROP = ".getOperatingInfo.url";
+	private final static String GETSMINFO_PROP = ".getSmartEnginesInfo.url";
+	private final static String CHARSET_PROP = ".charset";
+
+	private final String getUrl;
+	private final String deleteUrl;
+	private final String putUrl;
+	private final String getLevelsUrl;
+	private final String getOperatingInfoUrl;
+	private final String getSmartEngInfoUrl;
+	private final String name;
+	private final Logger lLog;
+
+	private final HttpExchange getLogApiRequest;
+	private final HttpExchange deleteLogApiRequest;
+	private final HttpExchange deleteResizeLogApiRequest;
+	private final HttpExchange putLogApiRequest;
+	private final HttpExchange getLevelsLogApiRequest;
+	private final HttpExchange getOperatingInfoLogApiRequest;
+	private final HttpExchange getSmartEngInfoLogApiRequest;
+
+	private final static HttpClient httpClient = HttpClient.newHttpClient();
 	
 	public LogInterface(AdvancedProperties props, String baseProperty, Logger log) {
-		
-		lLog = log ;
-		
-		name 	  	 		= props.getProperty(baseProperty + NAME_PROP) ;
-		getUrl 	  	 		= props.getProperty(baseProperty + GET_PROP) ;
-		deleteUrl 	 		= props.getProperty(baseProperty + DELETE_PROP) ;
-		putUrl 	  	 		= props.getProperty(baseProperty + PUT_PROP) ;
-		getLevelsUrl 		= props.getProperty(baseProperty + GETLEVELS_PROP) ;
-		getOperatingInfoUrl = props.getProperty(baseProperty + GETOPINFO_PROP) ;
-		getSmartEngInfoUrl  = props.getProperty(baseProperty + GETSMINFO_PROP) ;
-				
-		String csString 	= props.getProperty(baseProperty + CHARSET_PROP) ;
-		Charset charset ;
+
+		lLog = log;
+
+		name = props.getProperty(baseProperty + NAME_PROP);
+		getUrl = props.getProperty(baseProperty + GET_PROP);
+		deleteUrl = props.getProperty(baseProperty + DELETE_PROP);
+		putUrl = props.getProperty(baseProperty + PUT_PROP);
+		getLevelsUrl = props.getProperty(baseProperty + GETLEVELS_PROP);
+		getOperatingInfoUrl = props.getProperty(baseProperty + GETOPINFO_PROP);
+		getSmartEngInfoUrl = props.getProperty(baseProperty + GETSMINFO_PROP);
+
+		String csString = props.getProperty(baseProperty + CHARSET_PROP);
+		Charset charset;
 		try {
-			charset = Charset.forName(csString) ;
+			charset = Charset.forName(csString);
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "Exception when getting charset for log end points. Chartset default to UTF-8", e);
-			charset					= StandardCharsets.UTF_8 ;
+			charset = StandardCharsets.UTF_8;
 		}
-		
-		HmacGenerator hmacGenerator = new HmacGenerator(props, baseProperty, lLog) ;
-		
-		getLogApiRequest 			  = new HttpExchange(httpClient,	getUrl, 	 		 HttpExchange.GET_METHOD,	hmacGenerator, charset, lLog) ;
-		deleteLogApiRequest 		  = new HttpExchange(httpClient,	deleteUrl,			 HttpExchange.DELETE_METHOD, hmacGenerator, charset, lLog) ;
-		deleteResizeLogApiRequest	  = new HttpExchange(httpClient,	deleteUrl,			 HttpExchange.DELETE_METHOD, hmacGenerator, charset, lLog) ;
-		putLogApiRequest			  = new HttpExchange(httpClient,	putUrl, 	 		 HttpExchange.PUT_METHOD, 	hmacGenerator, charset, lLog) ;
-		getLevelsLogApiRequest		  = new HttpExchange(httpClient,	getLevelsUrl,		 HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;
-		getOperatingInfoLogApiRequest = new HttpExchange(httpClient,	getOperatingInfoUrl, HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
-		getSmartEngInfoLogApiRequest  = new HttpExchange(httpClient,	getSmartEngInfoUrl,  HttpExchange.GET_METHOD, 	hmacGenerator, charset, lLog) ;	
+
+		HmacGenerator hmacGenerator = new HmacGenerator(props, baseProperty);
+
+		getLogApiRequest = new HttpExchange(httpClient, getUrl, HttpExchange.GET_METHOD, hmacGenerator, charset, lLog);
+		deleteLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,
+				charset, lLog);
+		deleteResizeLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,
+				charset, lLog);
+		putLogApiRequest = new HttpExchange(httpClient, putUrl, HttpExchange.PUT_METHOD, hmacGenerator, charset, lLog);
+		getLevelsLogApiRequest = new HttpExchange(httpClient, getLevelsUrl, HttpExchange.GET_METHOD, hmacGenerator,
+				charset, lLog);
+		getOperatingInfoLogApiRequest = new HttpExchange(httpClient, getOperatingInfoUrl, HttpExchange.GET_METHOD,
+				hmacGenerator, charset, lLog);
+		getSmartEngInfoLogApiRequest = new HttpExchange(httpClient, getSmartEngInfoUrl, HttpExchange.GET_METHOD,
+				hmacGenerator, charset, lLog);
 
 	}
 
 	public String get(boolean askCompression) {
-		
-		String logString  ;		
+
+		String logString;
 		if (getLogApiRequest.isAvailable()) {
-			
-			String queryParam ;
+
+			String queryParam;
 			if (askCompression) {
-				queryParam = "?compressReturn=true" ;
+				queryParam = "?compressReturn=true";
 			} else {
-				queryParam = "" ;
+				queryParam = "";
 			}
-			logString = getLogApiRequest.send(queryParam,"") ;
+			logString = getLogApiRequest.send(queryParam, "");
 			if (logString != null) {
-			
+
 				try {
-					JsonObject jso = JsonParser.parseString(logString).getAsJsonObject() ;
-					String rc = jso.get(OPERATION).getAsString() ;
+					JsonObject jso = JsonParser.parseString(logString).getAsJsonObject();
+					String rc = jso.get(OPERATION).getAsString();
 					if (rc.equals(OK)) {
-						logString = jso.get(DATA).getAsString() ;
+						logString = jso.get(DATA).getAsString();
 					}
 				} catch (Exception e) {
 					// must be a simple text response, not json
-					lLog.log(Level.FINE, "Exception in json parsing get log response. Response will be considered as plain text ", e);
+					lLog.log(Level.FINE,
+							"Exception in json parsing get log response. Response will be considered as plain text ",
+							e);
 				}
 			} else {
-				logString = "null response. See application logs." ;
+				logString = "null response. See application logs.";
 			}
 		} else {
-			logString = "Connexion to get log API not available" ;
+			logString = "Connexion to get log API not available";
 		}
-		return logString ;
+		return logString;
 	}
 	
-	public String delete() {		
-		
-		String logString ;
-		if (deleteLogApiRequest.isAvailable()) {			
-			logString = deleteLogApiRequest.send("","") ; 					
+	public String delete() {
+
+		String logString;
+		if (deleteLogApiRequest.isAvailable()) {
+			logString = deleteLogApiRequest.send("", "");
 		} else {
-			logString = "Connexion to delete log API not available" ;
+			logString = "Connexion to delete log API not available";
 		}
-		return logString ;
+		return logString;
 	}
 
-	public String deleteResize(String newSize) {		
-		
-		String logString ;
+	public String deleteResize(String newSize) {
+
+		String logString;
 		if (deleteResizeLogApiRequest.isAvailable()) {
-			logString = deleteResizeLogApiRequest.send("/" + newSize, "") ; 					
+			logString = deleteResizeLogApiRequest.send("/" + newSize, "");
 		} else {
-			logString = "Connexion to delete log API not available" ;
+			logString = "Connexion to delete log API not available";
 		}
-		return logString ;
+		return logString;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String toString() {
-		return "Server " + name ;
+		return "Server " + name;
 	}
 	
 	public String changeLevel(JsonObject logParamJson) {

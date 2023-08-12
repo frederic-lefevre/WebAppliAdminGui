@@ -35,19 +35,19 @@ import org.fl.util.AdvancedProperties;
 
 public class ApiEndPoint {
 
-	private final static String METHOD_PROP  	  = ".method" ;
-	private final static String PATH_PROP 	 	  = ".path" ;
-	private final static String BODY_PROP 	 	  = ".body" ;
-	private final static String CHARSET_PROP 	  = ".charset" ;
-	private final static String BODY_CHARSET_PROP = ".bodyCharset" ;
-	private final static String JSON_FORMAT  	  = ".jsonFormat" ;
-	
-	private final String  	  		  method ;
-	private final String  	  		  path ;
-	private final Vector<BodyRequest> bodies ;
-	private final Charset 	  	  	  charset ;
-	private final HmacGenerator		  hmacGenerator ;
-	private final boolean   		  jsonFormat ;
+	private final static String METHOD_PROP = ".method";
+	private final static String PATH_PROP = ".path";
+	private final static String BODY_PROP = ".body";
+	private final static String CHARSET_PROP = ".charset";
+	private final static String BODY_CHARSET_PROP = ".bodyCharset";
+	private final static String JSON_FORMAT = ".jsonFormat";
+
+	private final String method;
+	private final String path;
+	private final Vector<BodyRequest> bodies;
+	private final Charset charset;
+	private final HmacGenerator hmacGenerator;
+	private final boolean jsonFormat;
 
 	public ApiEndPoint(AdvancedProperties props, String baseProperty, Logger sLog) {
 		
@@ -80,7 +80,7 @@ public class ApiEndPoint {
 		}
 		charset = cs ;
 		
-		hmacGenerator = new HmacGenerator(props, baseProperty, sLog) ;
+		hmacGenerator = new HmacGenerator(props, baseProperty) ;
 	}
 
 	public String getName() {
