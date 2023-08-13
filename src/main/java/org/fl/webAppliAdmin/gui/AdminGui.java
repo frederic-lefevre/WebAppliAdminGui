@@ -74,7 +74,7 @@ public class AdminGui extends JFrame {
 
 		LogGui logGui = new LogGui(apiProperties);
 		LogLevelGui logLevelGui = new LogLevelGui(apiProperties);
-		TesterGui testerGui = new TesterGui(apiProperties, cLog);
+		TesterGui testerGui = new TesterGui(apiProperties);
 
 		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext);
 		operationTab.add(logGui.getLogPanel(), "Get rest api logs", 0);
