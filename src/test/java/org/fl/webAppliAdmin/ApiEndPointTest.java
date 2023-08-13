@@ -24,7 +24,7 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -43,7 +43,7 @@ class ApiEndPointTest {
 		AdvancedProperties advProps = new AdvancedProperties(props);
 
 		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test");
-		assertEquals(StandardCharsets.US_ASCII.displayName(), apiEndPoint.getCharset().displayName());
+		assertThat(apiEndPoint.getCharset()).isEqualTo(StandardCharsets.US_ASCII);
 	}
 
 }
