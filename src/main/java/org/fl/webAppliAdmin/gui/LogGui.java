@@ -295,8 +295,7 @@ public class LogGui {
 			String resizeNumStr = resizeNum.getText();
 			try {
 				Integer.parseInt(resizeNumStr);
-				DeleteResizeLogs deleteResizeLogs = new DeleteResizeLogs(logChoice, deleteResizeLogButtonResponse,
-						resizeNumStr, cLog);
+				DeleteResizeLogs deleteResizeLogs = new DeleteResizeLogs(logChoice, deleteResizeLogButtonResponse,resizeNumStr);
 				deleteResizeLogs.execute();
 			} catch (NumberFormatException e) {
 				Font font = new Font("monospaced", Font.BOLD, 18);
