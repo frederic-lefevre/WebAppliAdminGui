@@ -35,6 +35,8 @@ import org.fl.util.AdvancedProperties;
 
 public class ApiEndPoint {
 
+	private static final Logger sLog = Control.getLogger();
+	
 	private final static String METHOD_PROP = ".method";
 	private final static String PATH_PROP = ".path";
 	private final static String BODY_PROP = ".body";
@@ -49,46 +51,48 @@ public class ApiEndPoint {
 	private final HmacGenerator hmacGenerator;
 	private final boolean jsonFormat;
 
-	public ApiEndPoint(AdvancedProperties props, String baseProperty, Logger sLog) {
-		
-		method 		= props.getProperty(baseProperty + METHOD_PROP) ;
-		path		= props.getProperty(baseProperty + PATH_PROP) ;
-		jsonFormat 	= props.getBoolean(baseProperty + JSON_FORMAT, true) ;
-		bodies		= new Vector<BodyRequest>() ;
-		
+	public ApiEndPoint(AdvancedProperties props, String baseProperty) {
+
+		method = props.getProperty(baseProperty + METHOD_PROP);
+		path = props.getProperty(baseProperty + PATH_PROP);
+		jsonFormat = props.getBoolean(baseProperty + JSON_FORMAT, true);
+		bodies = new Vector<BodyRequest>();
+
 		if (props.containsKey(baseProperty + BODY_PROP)) {
 			// only one body
-			Charset bodyCharset = getBodyCharset(props, baseProperty, sLog) ;
-			bodies.add(new BodyRequest("body", props.getFileContent(baseProperty + BODY_PROP, bodyCharset))) ;
+			Charset bodyCharset = getBodyCharset(props, baseProperty);
+			bodies.add(new BodyRequest("body", props.getFileContent(baseProperty + BODY_PROP, bodyCharset)));
 		} else {
-			List<String> bodyProps = props.getKeysElements(baseProperty + BODY_PROP + ".") ;
-			if (! bodyProps.isEmpty()) {
-				Charset bodyCharset = getBodyCharset(props, baseProperty, sLog) ;
+			List<String> bodyProps = props.getKeysElements(baseProperty + BODY_PROP + ".");
+			if (!bodyProps.isEmpty()) {
+				Charset bodyCharset = getBodyCharset(props, baseProperty);
 				for (String bp : bodyProps) {
-					bodies.add(new BodyRequest(bp, props.getFileContent(baseProperty + BODY_PROP + "." + bp, bodyCharset))) ;
+					bodies.add(new BodyRequest(bp,
+							props.getFileContent(baseProperty + BODY_PROP + "." + bp, bodyCharset)));
 				}
 			}
-		} 
-		
-		String csStr = props.getProperty(baseProperty + CHARSET_PROP) ;
-		Charset cs ;
-		try {
-			cs = Charset.forName(csStr) ;
-		} catch (Exception e) {
-			sLog.log(Level.SEVERE, "Exception when getting api interface charset with property " + baseProperty + CHARSET_PROP + ". Chartset default to UTF-8", e);
-			cs	= StandardCharsets.UTF_8 ;
 		}
-		charset = cs ;
-		
-		hmacGenerator = new HmacGenerator(props, baseProperty) ;
+
+		String csStr = props.getProperty(baseProperty + CHARSET_PROP);
+		Charset cs;
+		try {
+			cs = Charset.forName(csStr);
+		} catch (Exception e) {
+			sLog.log(Level.SEVERE, "Exception when getting api interface charset with property " + baseProperty
+					+ CHARSET_PROP + ". Chartset default to UTF-8", e);
+			cs = StandardCharsets.UTF_8;
+		}
+		charset = cs;
+
+		hmacGenerator = new HmacGenerator(props, baseProperty);
 	}
 
 	public String getName() {
-		return method + " " + path ;
+		return method + " " + path;
 	}
-	
+
 	public String toString() {
-		return method + " " + path ;
+		return method + " " + path;
 	}
 
 	public String getMethod() {
@@ -111,17 +115,18 @@ public class ApiEndPoint {
 		return hmacGenerator;
 	}
 	
-	private Charset getBodyCharset(AdvancedProperties props, String baseProperty, Logger sLog) {
-		
-		String csBody = props.getProperty(baseProperty + BODY_CHARSET_PROP) ;
-		Charset bodyCharset ;
+	private Charset getBodyCharset(AdvancedProperties props, String baseProperty) {
+
+		String csBody = props.getProperty(baseProperty + BODY_CHARSET_PROP);
+		Charset bodyCharset;
 		try {
-			bodyCharset = Charset.forName(csBody) ;
+			bodyCharset = Charset.forName(csBody);
 		} catch (Exception e) {
-			sLog.log(Level.SEVERE, "Exception when setting body file charset. Chartset set to default charset " + Charset.defaultCharset(), e);
-			bodyCharset	= Charset.defaultCharset() ;
+			sLog.log(Level.SEVERE, "Exception when setting body file charset. Chartset set to default charset "
+					+ Charset.defaultCharset(), e);
+			bodyCharset = Charset.defaultCharset();
 		}
-		return bodyCharset ;
+		return bodyCharset;
 	}
 
 	public boolean isJsonFormat() {

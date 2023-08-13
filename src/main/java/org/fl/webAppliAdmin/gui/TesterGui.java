@@ -100,7 +100,7 @@ public class TesterGui {
 		hostManager = new HostManager(adminProperties, testerHostBaseProperty) ;
 		hostValues = hostManager.getHosts() ;
 		
-		apiEndPointManager = new ApiEndPointManager(adminProperties, testerEndPointBaseProperty, tLog) ;
+		apiEndPointManager = new ApiEndPointManager(adminProperties, testerEndPointBaseProperty) ;
 		apiEndPoints = apiEndPointManager.getApiEndPoints() ;
 		
 		testerPanel = new JPanel() ;

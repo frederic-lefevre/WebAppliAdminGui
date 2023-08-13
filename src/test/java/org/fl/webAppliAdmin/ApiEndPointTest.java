@@ -32,20 +32,17 @@ import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
 import org.fl.util.AdvancedProperties;
-import org.fl.util.RunningContext;
 
 class ApiEndPointTest {
 
 	@Test
 	void testCharset() {
 		
-		RunningContext runContext = TestUtils.getRunningContext() ;
-		
 		Properties props = new Properties() ;
 		props.put("test.charset", StandardCharsets.US_ASCII.displayName()) ;
 		AdvancedProperties advProps = new AdvancedProperties(props) ;
 		
-		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test", runContext.getpLog()) ;
+		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test") ;
 		assertEquals(StandardCharsets.US_ASCII.displayName(), apiEndPoint.getCharset().displayName()) ;
 	}
 
