@@ -26,13 +26,13 @@ package org.fl.webAppliAdmin;
 
 public class BodyRequest {
 
-	private final String bodyName ;
-	private final String body ;
-	
+	private final String bodyName;
+	private final String body;
+
 	public BodyRequest(String n, String b) {
-		
-		bodyName = n ;
-		body 	 = b ;		
+
+		bodyName = n;
+		body = b;
 	}
 
 	public String getBodyName() {
@@ -44,6 +44,6 @@ public class BodyRequest {
 	}
 
 	public String toString() {
-		return bodyName ;
+		return bodyName;
 	}
 }

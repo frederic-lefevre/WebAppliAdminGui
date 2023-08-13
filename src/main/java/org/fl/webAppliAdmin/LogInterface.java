@@ -92,18 +92,13 @@ public class LogInterface {
 
 		HmacGenerator hmacGenerator = new HmacGenerator(props, baseProperty);
 
-		getLogApiRequest = new HttpExchange(httpClient, getUrl, HttpExchange.GET_METHOD, hmacGenerator, charset, lLog);
-		deleteLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,
-				charset, lLog);
-		deleteResizeLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,
-				charset, lLog);
-		putLogApiRequest = new HttpExchange(httpClient, putUrl, HttpExchange.PUT_METHOD, hmacGenerator, charset, lLog);
-		getLevelsLogApiRequest = new HttpExchange(httpClient, getLevelsUrl, HttpExchange.GET_METHOD, hmacGenerator,
-				charset, lLog);
-		getOperatingInfoLogApiRequest = new HttpExchange(httpClient, getOperatingInfoUrl, HttpExchange.GET_METHOD,
-				hmacGenerator, charset, lLog);
-		getSmartEngInfoLogApiRequest = new HttpExchange(httpClient, getSmartEngInfoUrl, HttpExchange.GET_METHOD,
-				hmacGenerator, charset, lLog);
+		getLogApiRequest = new HttpExchange(httpClient, getUrl, HttpExchange.GET_METHOD, hmacGenerator, charset);
+		deleteLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,charset);
+		deleteResizeLogApiRequest = new HttpExchange(httpClient, deleteUrl, HttpExchange.DELETE_METHOD, hmacGenerator,charset);
+		putLogApiRequest = new HttpExchange(httpClient, putUrl, HttpExchange.PUT_METHOD, hmacGenerator, charset);
+		getLevelsLogApiRequest = new HttpExchange(httpClient, getLevelsUrl, HttpExchange.GET_METHOD, hmacGenerator,charset);
+		getOperatingInfoLogApiRequest = new HttpExchange(httpClient, getOperatingInfoUrl, HttpExchange.GET_METHOD,hmacGenerator, charset);
+		getSmartEngInfoLogApiRequest = new HttpExchange(httpClient, getSmartEngInfoUrl, HttpExchange.GET_METHOD,hmacGenerator, charset);
 
 	}
 
