@@ -24,7 +24,7 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Vector;
 
@@ -42,8 +42,9 @@ class ApiEndPointManagerTest {
 		ApiEndPointManager endPointMgr = new ApiEndPointManager(apiProps, "webAppli.tester.endPoint.");
 
 		Vector<ApiEndPoint> endPoints = endPointMgr.getApiEndPoints();
-		assertNotNull(endPoints);
-		assertTrue(endPoints.size() > 0);
+		assertThat(endPoints)
+			.isNotNull()
+			.isNotEmpty();
 	}
 
 }
