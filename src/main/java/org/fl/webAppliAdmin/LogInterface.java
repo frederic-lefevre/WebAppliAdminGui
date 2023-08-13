@@ -36,6 +36,8 @@ import org.fl.util.AdvancedProperties;
 
 public class LogInterface {
 	
+	private static final Logger lLog = Control.getLogger();
+	
 	// JSON response fields and values
 	private final static String OPERATION = "operation";
 	private final static String OK = "OK";
@@ -57,7 +59,6 @@ public class LogInterface {
 	private final String getOperatingInfoUrl;
 	private final String getSmartEngInfoUrl;
 	private final String name;
-	private final Logger lLog;
 
 	private final HttpExchange getLogApiRequest;
 	private final HttpExchange deleteLogApiRequest;
@@ -69,9 +70,7 @@ public class LogInterface {
 
 	private final static HttpClient httpClient = HttpClient.newHttpClient();
 	
-	public LogInterface(AdvancedProperties props, String baseProperty, Logger log) {
-
-		lLog = log;
+	public LogInterface(AdvancedProperties props, String baseProperty) {
 
 		name = props.getProperty(baseProperty + NAME_PROP);
 		getUrl = props.getProperty(baseProperty + GET_PROP);
@@ -86,7 +85,7 @@ public class LogInterface {
 		try {
 			charset = Charset.forName(csString);
 		} catch (Exception e) {
-			log.log(Level.SEVERE, "Exception when getting charset for log end points. Chartset default to UTF-8", e);
+			lLog.log(Level.SEVERE, "Exception when getting charset for log end points. Chartset default to UTF-8", e);
 			charset = StandardCharsets.UTF_8;
 		}
 

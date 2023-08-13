@@ -37,13 +37,13 @@ class ApiEndPointTest {
 
 	@Test
 	void testCharset() {
-		
-		Properties props = new Properties() ;
-		props.put("test.charset", StandardCharsets.US_ASCII.displayName()) ;
-		AdvancedProperties advProps = new AdvancedProperties(props) ;
-		
-		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test") ;
-		assertEquals(StandardCharsets.US_ASCII.displayName(), apiEndPoint.getCharset().displayName()) ;
+
+		Properties props = new Properties();
+		props.put("test.charset", StandardCharsets.US_ASCII.displayName());
+		AdvancedProperties advProps = new AdvancedProperties(props);
+
+		ApiEndPoint apiEndPoint = new ApiEndPoint(advProps, "test");
+		assertEquals(StandardCharsets.US_ASCII.displayName(), apiEndPoint.getCharset().displayName());
 	}
 
 }
