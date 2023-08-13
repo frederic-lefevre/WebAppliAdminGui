@@ -169,8 +169,7 @@ public class LogLevelGui {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
-			RequestLogLevel requestLogLevel = new RequestLogLevel(logChoice, getLevelButtonResponse, changeLevelsButton,
-					cLog);
+			RequestLogLevel requestLogLevel = new RequestLogLevel(logChoice, getLevelButtonResponse, changeLevelsButton);
 			requestLogLevel.execute();
 		}
 	}
