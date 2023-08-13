@@ -22,29 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+
 package org.fl.webAppliAdmin;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.logging.Logger;
 
-import java.util.Vector;
+import org.fl.util.RunningContext;
 
-import org.junit.jupiter.api.Test;
+public class Control {
 
-import org.fl.util.AdvancedProperties;
-
-class ApiEndPointManagerTest {
-
-	@Test
-	void test() {
-
-		AdvancedProperties apiProps = TestUtils.getApiProperties();
-
-		ApiEndPointManager endPointMgr = new ApiEndPointManager(apiProps, "webAppli.tester.endPoint.");
-
-		Vector<ApiEndPoint> endPoints = endPointMgr.getApiEndPoints();
-		assertThat(endPoints)
-			.isNotNull()
-			.isNotEmpty();
+	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties";
+	
+	private static Logger cLog;
+	
+	private static RunningContext runningContext;
+	
+	private static boolean initialized = false;
+	
+	private Control() {
 	}
 
+	public static void init() {
+		
+		runningContext = new RunningContext("Administration for web applications", null, DEFAULT_PROP_FILE);
+		cLog = runningContext.getpLog();
+		
+		initialized = true;
+	}
+	
+	public static RunningContext getRunningContext() {
+		if (!initialized) {
+			init();
+		}
+		return runningContext;
+	}
+
+	public static Logger getLogger() {
+		if (!initialized) {
+			init();
+		}
+		return cLog;
+	}
 }

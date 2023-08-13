@@ -1,3 +1,27 @@
+/*
+ * MIT License
+
+Copyright (c) 2017, 2023 Frederic Lefevre
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 package org.fl.webAppliAdmin;
 
 import java.io.InputStream;
@@ -18,50 +42,49 @@ import org.fl.util.HttpUtils;
 public class HttpExchange {
 
 	// HTTP methods
-	public final static String GET_METHOD 	  = "GET" ; 
-	public final static String DELETE_METHOD  = "DELETE" ; 
-	public final static String PUT_METHOD 	  = "PUT" ; 
-	public final static String POST_METHOD 	  = "POST" ;
-	
-	//HTTP headers
-	private final static String AUTHORIZATION = "Authorization" ;
-	private final static String DEVICE_ID 	  = "Device-Id" ;
-	private final static String TIMESTAMP 	  = "Timestamp" ;
-	
-	// Some useful string for http content type headers 
-	private final static String CONTENT_TYPE 	= "Content-Type" ;
-	private final static String APPLICATION_JSON = "application/json" ;
-	private final static String CHAR_SET = ";charset=" ;
+	public final static String GET_METHOD = "GET";
+	public final static String DELETE_METHOD = "DELETE";
+	public final static String PUT_METHOD = "PUT";
+	public final static String POST_METHOD = "POST";
+
+	// HTTP headers
+	private final static String AUTHORIZATION = "Authorization";
+	private final static String DEVICE_ID = "Device-Id";
+	private final static String TIMESTAMP = "Timestamp";
+
+	// Some useful string for http content type headers
+	private final static String CONTENT_TYPE = "Content-Type";
+	private final static String APPLICATION_JSON = "application/json";
+	private final static String CHAR_SET = ";charset=";
 
 	// Request time out in seconds
-	private final static long REQUEST_TIME_OUT = 120 ;
-	
-	private Logger lLog ;
-	
+	private final static long REQUEST_TIME_OUT = 120;
+
+	private static final Logger lLog = Control.getLogger();
+
 	// HMAC element
-	private final String uuid ;
+	private final String uuid;
+
+	private final HmacGenerator hmacGenerator;
+
+	private final HttpClient httpClient;
+	private final String urlBase;
+	private final String method;
+	private final Charset charset;
+	private boolean available;
+	private long lastRequestDuration;
 	
-	private final HmacGenerator hmacGenerator ;
-	
-	private final HttpClient httpClient ;	
-	private final String  	 urlBase ;
-	private final String  	 method ;
-	private final Charset 	 charset ;
-	private       boolean 	 available ;
-	private       long    	 lastRequestDuration ;
-	
-	public HttpExchange(HttpClient hc, String u, String meth, HmacGenerator hg, Charset cs, Logger log) {
-		
-		available = true ;		
-		
-		lLog 	 	  		= log ;
-		httpClient			= hc ;
-		urlBase 	  		= u ;
-		method 	 	  		= meth ;
-		charset  	  		= cs ;
-		hmacGenerator 		= hg ;
-		uuid		  		= hmacGenerator.getUuid() ;
-		lastRequestDuration = -1 ;
+	public HttpExchange(HttpClient hc, String u, String meth, HmacGenerator hg, Charset cs) {
+
+		available = true;
+
+		httpClient = hc;
+		urlBase = u;
+		method = meth;
+		charset = cs;
+		hmacGenerator = hg;
+		uuid = hmacGenerator.getUuid();
+		lastRequestDuration = -1;
 	}
 	
 	public String send(String pathParam, String body) {
