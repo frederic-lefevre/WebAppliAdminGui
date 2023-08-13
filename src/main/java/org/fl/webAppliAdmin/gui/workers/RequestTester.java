@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import javax.swing.SwingWorker;
 
 import org.fl.webAppliAdmin.ApiEndPoint;
+import org.fl.webAppliAdmin.Control;
 import org.fl.webAppliAdmin.HmacGenerator;
 import org.fl.webAppliAdmin.HttpExchange;
 import org.fl.webAppliAdmin.gui.ButtonResponse;
@@ -42,12 +43,13 @@ import org.fl.util.json.JsonUtils;
 
 public class RequestTester  extends SwingWorker<String,String> {
 
+	private static final Logger tLog = Control.getLogger();
+	
 	private static final String CONNEXION_UNAVAILABLE = "The connexion is unavailable";
 	private static final String NULL_OR_EMPY_RESPONSE = "Null or empty response";
 
 	private final static HttpClient httpClient = HttpClient.newHttpClient();
 
-	private final Logger tLog;
 	private final ApiEndPoint apiEndPoint;
 	private final String url;
 	private final String body;
@@ -56,12 +58,11 @@ public class RequestTester  extends SwingWorker<String,String> {
 	// Text area for the result
 	private ButtonResponse buttonResponse;
 
-	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, boolean askCompression, Logger l) {
+	public RequestTester(ApiEndPoint ap, String u, String b, ButtonResponse br, boolean askCompression) {
 
 		apiEndPoint = ap;
 		url = u;
 		body = b;
-		tLog = l;
 		buttonResponse = br;
 		if (askCompression) {
 			queryParam = "?compressReturn=true";

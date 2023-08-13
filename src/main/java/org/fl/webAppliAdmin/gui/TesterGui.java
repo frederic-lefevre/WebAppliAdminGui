@@ -293,7 +293,7 @@ public class TesterGui {
 			boolean askCompression = compressResponse.isSelected() ; 
 			tLog.finest(() -> "EndPoint =" + apiEndPoint.getName());
 			
-			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, askCompression, tLog) ;
+			RequestTester requestTester = new RequestTester(apiEndPoint, url, body, testerButtonResponse, askCompression) ;
 			requestTester.execute();						
 		}
 	}
