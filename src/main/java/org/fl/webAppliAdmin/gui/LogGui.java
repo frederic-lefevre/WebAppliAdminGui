@@ -323,8 +323,7 @@ public class LogGui {
 		public void actionPerformed(ActionEvent arg0) {
 
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
-			RequestSmartEngineInformations requestSeInfos = new RequestSmartEngineInformations(logChoice,
-					getSeInfosButtonResponse, cLog);
+			RequestSmartEngineInformations requestSeInfos = new RequestSmartEngineInformations(logChoice, getSeInfosButtonResponse);
 			requestSeInfos.execute();
 		}
 	}
