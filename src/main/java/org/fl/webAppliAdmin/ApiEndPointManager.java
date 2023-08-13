@@ -24,8 +24,8 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
-import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.fl.util.AdvancedProperties;
 
@@ -35,12 +35,9 @@ public class ApiEndPointManager {
 	
 	public ApiEndPointManager(AdvancedProperties props, String baseProperty) {
 
-		apiEndPoints = new Vector<ApiEndPoint>() ;
-		
-		List<String> logsProperties = props.getKeysElements(baseProperty);
-		for (String lp : logsProperties) {
-			apiEndPoints.add(new ApiEndPoint(props, baseProperty + lp));
-		}
+		apiEndPoints = props.getKeysElements(baseProperty).stream()
+			.map(logProperty -> new ApiEndPoint(props, baseProperty + logProperty))
+			.collect(Collectors.toCollection(Vector::new));
 	}
 
 	public Vector<ApiEndPoint> getApiEndPoints() {
