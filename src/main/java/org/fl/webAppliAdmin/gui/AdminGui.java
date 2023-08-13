@@ -26,8 +26,6 @@ package org.fl.webAppliAdmin.gui;
 
 import java.awt.EventQueue;
 
-import java.util.logging.Logger;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
@@ -60,9 +58,8 @@ public class AdminGui extends JFrame {
 		// access to properties and logger
 		Control.init();
 		RunningContext adminRunningContext = Control.getRunningContext();
-		Logger cLog = Control.getLogger();
 
-		cLog.info("Start Administration for web applications");
+		Control.getLogger().info("Start Administration for web applications");
 
 		AdvancedProperties adminProperties = adminRunningContext.getProps();
 		AdvancedProperties apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
