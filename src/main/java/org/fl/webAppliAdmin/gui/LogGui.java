@@ -271,8 +271,7 @@ public class LogGui {
 
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
 			boolean askLogsCompression = compressLogs.isSelected();
-			RequestLogContent requestLogContent = new RequestLogContent(logChoice, askLogsCompression,
-					getLogButtonResponse, cLog);
+			RequestLogContent requestLogContent = new RequestLogContent(logChoice, askLogsCompression, getLogButtonResponse);
 			requestLogContent.execute();
 		}
 	}

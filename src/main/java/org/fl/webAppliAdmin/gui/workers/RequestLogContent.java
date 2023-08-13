@@ -30,22 +30,23 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingWorker;
 
+import org.fl.webAppliAdmin.Control;
 import org.fl.webAppliAdmin.LogInterface;
 import org.fl.webAppliAdmin.gui.ButtonResponse;
 
 public class RequestLogContent  extends SwingWorker<String,String> {
 
-	private final LogInterface 	 logChoice ;
-	private final boolean 		 askLogsCompression ;
-	private final ButtonResponse getLogButtonResponse ;
-	private final Logger 		 tLog ;
+	private static final Logger tLog = Control.getLogger();
+	
+	private final LogInterface logChoice;
+	private final boolean askLogsCompression;
+	private final ButtonResponse getLogButtonResponse;
 
-	public RequestLogContent(LogInterface lc, boolean alc, ButtonResponse glbr, Logger l) {
+	public RequestLogContent(LogInterface lc, boolean alc, ButtonResponse glbr) {
 		super();
-		logChoice 			 = lc;
-		askLogsCompression   = alc ;
+		logChoice = lc;
+		askLogsCompression = alc;
 		getLogButtonResponse = glbr;
-		tLog 				 = l ;
 	}
 
 	@Override
@@ -55,11 +56,11 @@ public class RequestLogContent  extends SwingWorker<String,String> {
 		return logChoice.get(askLogsCompression);
 	}
 
-	@Override 
+	@Override
 	public void done() {
 		try {
-			getLogButtonResponse.setResponse(get()) ;
-			getLogButtonResponse.normalText();			
+			getLogButtonResponse.setResponse(get());
+			getLogButtonResponse.normalText();
 		} catch (InterruptedException e) {
 			tLog.log(Level.SEVERE, "InterruptedException getting response", e);
 		} catch (ExecutionException e) {
