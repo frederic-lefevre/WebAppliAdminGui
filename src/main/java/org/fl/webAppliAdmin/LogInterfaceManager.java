@@ -24,9 +24,9 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
-import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.fl.util.AdvancedProperties;
 
@@ -36,12 +36,9 @@ public class LogInterfaceManager {
 
 	public LogInterfaceManager(AdvancedProperties props, String baseProperty, Logger log) {
 
-		logInterfaces = new Vector<LogInterface>();
-
-		List<String> logsProperties = props.getKeysElements(baseProperty);
-		for (String lp : logsProperties) {
-			logInterfaces.add(new LogInterface(props, baseProperty + lp));
-		}
+		logInterfaces = props.getKeysElements(baseProperty).stream()
+				.map(logProperty -> new LogInterface(props, baseProperty + logProperty))
+				.collect(Collectors.toCollection(Vector::new));
 	}
 
 	public Vector<LogInterface> getLogInterfaces() {
