@@ -60,7 +60,6 @@ import org.fl.webAppliAdmin.gui.workers.RequestSmartEngineInformations;
 import org.fl.util.AdvancedProperties;
 import org.fl.util.swing.text.SearchableTextPane;
 
-
 public class LogGui {
 
 	private static final Logger cLog = Control.getLogger();
@@ -283,7 +282,7 @@ public class LogGui {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
-			DeleteLogs deleteLogs = new DeleteLogs(logChoice, deleteLogButtonResponse, cLog);
+			DeleteLogs deleteLogs = new DeleteLogs(logChoice, deleteLogButtonResponse);
 			deleteLogs.execute();
 		}
 	}
