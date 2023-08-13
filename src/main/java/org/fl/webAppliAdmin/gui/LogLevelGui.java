@@ -29,7 +29,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -54,8 +53,6 @@ public class LogLevelGui {
 
 	private final static String logsBaseProperty = "webAppli.log.";
 
-	private Logger cLog;
-
 	private final LogInterfaceManager logInterfaceManager;
 	private final Vector<LogInterface> logInterfaces;
 
@@ -74,9 +71,8 @@ public class LogLevelGui {
 	private final ButtonResponse setLevelButtonResponse;
 	private final ButtonResponse getLevelButtonResponse;
 
-	public LogLevelGui(AdvancedProperties adminProperties, Logger l) {
+	public LogLevelGui(AdvancedProperties adminProperties) {
 
-		cLog = l;
 		logInterfaceManager = new LogInterfaceManager(adminProperties, logsBaseProperty);
 
 		logInterfaces = logInterfaceManager.getLogInterfaces();
@@ -159,7 +155,7 @@ public class LogLevelGui {
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
 			String logLevelChoice = logLevelContent.getText();
 
-			SetLogLevels setLogLevels = new SetLogLevels(logChoice, logLevelChoice, setLevelButtonResponse, cLog);
+			SetLogLevels setLogLevels = new SetLogLevels(logChoice, logLevelChoice, setLevelButtonResponse);
 			setLogLevels.execute();
 		}
 	}

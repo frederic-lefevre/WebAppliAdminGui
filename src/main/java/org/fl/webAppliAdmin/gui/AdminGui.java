@@ -56,34 +56,34 @@ public class AdminGui extends JFrame {
 	}
 	
 	public AdminGui() {
-		
+
 		// access to properties and logger
 		Control.init();
 		RunningContext adminRunningContext = Control.getRunningContext();
 		Logger cLog = Control.getLogger();
 
-		cLog.info("Start Administration for web applications") ;
-		
+		cLog.info("Start Administration for web applications");
+
 		AdvancedProperties adminProperties = adminRunningContext.getProps();
-		AdvancedProperties apiProperties   = adminProperties.getPropertiesFromFile("webAppli.configurationFile") ;
-		
+		AdvancedProperties apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
+
 		setBounds(20, 20, 1600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Administration console for web application application") ;
+		setTitle("Administration console for web application application");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
-		LogGui logGui 			= new LogGui(apiProperties) ;
-		LogLevelGui logLevelGui = new LogLevelGui(apiProperties, cLog) ;
-		TesterGui testerGui 	= new TesterGui(apiProperties, cLog) ;
-		
-		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext) ;
-		operationTab.add(logGui.getLogPanel(), 			 "Get rest api logs", 	 0);
-		operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
-		operationTab.add(testerGui.getTesterPanel(), 	 "API Request Tester", 	 2);
+		LogGui logGui = new LogGui(apiProperties);
+		LogLevelGui logLevelGui = new LogLevelGui(apiProperties);
+		TesterGui testerGui = new TesterGui(apiProperties, cLog);
 
-		operationTab.setSelectedIndex(0) ;
-		
-		getContentPane().add(operationTab) ;		
+		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext);
+		operationTab.add(logGui.getLogPanel(), "Get rest api logs", 0);
+		operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
+		operationTab.add(testerGui.getTesterPanel(), "API Request Tester", 2);
+
+		operationTab.setSelectedIndex(0);
+
+		getContentPane().add(operationTab);
 	}
 	
 }
