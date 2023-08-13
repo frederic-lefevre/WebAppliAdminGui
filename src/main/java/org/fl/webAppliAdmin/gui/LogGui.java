@@ -312,8 +312,7 @@ public class LogGui {
 
 			LogInterface logChoice = (LogInterface) logList.getSelectedItem();
 			boolean withIpLookUp = iPLookUp.isSelected();
-			RequestOperatingInfos requestOpInfos = new RequestOperatingInfos(logChoice, withIpLookUp,
-					getOpInfosButtonResponse, cLog);
+			RequestOperatingInfos requestOpInfos = new RequestOperatingInfos(logChoice, withIpLookUp, getOpInfosButtonResponse);
 			requestOpInfos.execute();
 		}
 	}
