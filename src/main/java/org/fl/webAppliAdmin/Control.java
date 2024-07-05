@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2023 Frederic Lefevre
+Copyright (c) 2017, 2024 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ public class Control {
 
 	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties";
 	
-	private static Logger cLog;
+	private static final Logger cLog = Logger.getLogger(Control.class.getName());
 	
 	private static RunningContext runningContext;
 	
@@ -44,9 +44,7 @@ public class Control {
 
 	public static void init() {
 		
-		runningContext = new RunningContext("Administration for web applications", null, DEFAULT_PROP_FILE);
-		cLog = runningContext.getpLog();
-		
+		runningContext = new RunningContext("Administration for web applications", null, DEFAULT_PROP_FILE);		
 		initialized = true;
 	}
 	
