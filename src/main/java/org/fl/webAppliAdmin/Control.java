@@ -44,7 +44,7 @@ public class Control {
 
 	public static void init() {
 		
-		runningContext = new RunningContext("Administration for web applications", null, DEFAULT_PROP_FILE);		
+		runningContext = new RunningContext("org.fl.webAppliAdmin", null, DEFAULT_PROP_FILE);		
 		initialized = true;
 	}
 	
