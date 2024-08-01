@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2023 Frederic Lefevre
+Copyright (c) 2017, 2024 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,6 @@ import javax.swing.JTextField;
 import org.fl.webAppliAdmin.ApiEndPoint;
 import org.fl.webAppliAdmin.ApiEndPointManager;
 import org.fl.webAppliAdmin.BodyRequest;
-import org.fl.webAppliAdmin.Control;
 import org.fl.webAppliAdmin.Host;
 import org.fl.webAppliAdmin.HostManager;
 import org.fl.webAppliAdmin.gui.workers.RequestTester;
@@ -55,7 +54,7 @@ import org.fl.util.AdvancedProperties;
 
 public class TesterGui {
 
-	private static final Logger tLog = Control.getLogger();
+	private static final Logger tLog = Logger.getLogger(TesterGui.class.getName());
 	
 	private final static String testerHostBaseProperty = "webAppli.tester.host.";
 	private final static String testerEndPointBaseProperty = "webAppli.tester.endPoint.";

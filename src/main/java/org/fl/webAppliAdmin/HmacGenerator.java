@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2023 Frederic Lefevre
+Copyright (c) 2017, 2024 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ public class HmacGenerator {
 	private final String clientId;
 	private final String uuid;
 
-	private static final Logger hLog = Control.getLogger();
+	private static final Logger hLog = Logger.getLogger(HmacGenerator.class.getName());
 
 	private static Base64.Encoder base64Encoder = Base64.getEncoder();
 
