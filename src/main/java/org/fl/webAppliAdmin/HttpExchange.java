@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2023 Frederic Lefevre
+Copyright (c) 2017, 2024 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ public class HttpExchange {
 	// Request time out in seconds
 	private final static long REQUEST_TIME_OUT = 120;
 
-	private static final Logger lLog = Control.getLogger();
+	private static final Logger lLog = Logger.getLogger(HttpExchange.class.getName());
 
 	// HMAC element
 	private final String uuid;

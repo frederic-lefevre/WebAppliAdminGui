@@ -22,18 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
 package org.fl.webAppliAdmin;
-
-import java.util.logging.Logger;
 
 import org.fl.util.RunningContext;
 
 public class Control {
 
 	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties";
-	
-	private static final Logger cLog = Logger.getLogger(Control.class.getName());
 	
 	private static RunningContext runningContext;
 	
@@ -55,10 +50,4 @@ public class Control {
 		return runningContext;
 	}
 
-	public static Logger getLogger() {
-		if (!initialized) {
-			init();
-		}
-		return cLog;
-	}
 }

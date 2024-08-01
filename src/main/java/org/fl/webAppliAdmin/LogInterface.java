@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2023 Frederic Lefevre
+Copyright (c) 2017, 2024 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import org.fl.util.AdvancedProperties;
 
 public class LogInterface {
 	
-	private static final Logger lLog = Control.getLogger();
+	private static final Logger lLog = Logger.getLogger(LogInterface.class.getName());
 	
 	// JSON response fields and values
 	private final static String OPERATION = "operation";
