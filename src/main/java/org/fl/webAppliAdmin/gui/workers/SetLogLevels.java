@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2025 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,13 +33,16 @@ import javax.swing.SwingWorker;
 import org.fl.webAppliAdmin.LogInterface;
 import org.fl.webAppliAdmin.gui.ButtonResponse;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.fl.util.json.JsonUtils;
 
 public class SetLogLevels  extends SwingWorker<String,String> {
 
 	private static final Logger tLog = Logger.getLogger(SetLogLevels.class.getName());
+	
+	private static final ObjectMapper mapper = new ObjectMapper();
 	
 	private final LogInterface logChoice;
 	private final String logLevelChoice;
@@ -57,8 +60,7 @@ public class SetLogLevels  extends SwingWorker<String,String> {
 		setLevelButtonResponse.updatingMessage();
 		String ret;
 		try {
-			JsonObject levelJsonResp = JsonParser.parseString(logLevelChoice).getAsJsonObject();
-			JsonObject levelJson = levelJsonResp.get("data").getAsJsonObject();
+			JsonNode levelJson = mapper.readTree(logLevelChoice);
 			ret = logChoice.changeLevel(levelJson);
 		} catch (Exception e) {
 			ret = "Exception parsing levels json " + e.toString();
@@ -79,6 +81,6 @@ public class SetLogLevels  extends SwingWorker<String,String> {
 	}
 
 	private String formatResponse(String resp) {
-		return JsonUtils.jsonPrettyPrint(resp, tLog);
+		return JsonUtils.jsonStringPrettyPrint(resp, tLog);
 	}
 }

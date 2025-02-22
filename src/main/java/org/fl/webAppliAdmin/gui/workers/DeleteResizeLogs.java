@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2025 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -70,6 +70,6 @@ public class DeleteResizeLogs  extends SwingWorker<String,String> {
 	}
 
 	private String formatResponse(String resp) {
-		return JsonUtils.jsonPrettyPrint(resp, tLog);
+		return JsonUtils.jsonStringPrettyPrint(resp, tLog);
 	}
 }

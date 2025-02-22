@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2025 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.fl.util.AdvancedProperties;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LogInterface {
 	
 	private static final Logger lLog = Logger.getLogger(LogInterface.class.getName());
+	
+	private static final ObjectMapper mapper = new ObjectMapper();
 	
 	// JSON response fields and values
 	private final static String OPERATION = "operation";
@@ -116,10 +119,11 @@ public class LogInterface {
 			if (logString != null) {
 
 				try {
-					JsonObject jso = JsonParser.parseString(logString).getAsJsonObject();
-					String rc = jso.get(OPERATION).getAsString();
+					JsonNode jso = mapper.readTree(logString);
+
+					String rc = jso.get(OPERATION).asText();
 					if (rc.equals(OK)) {
-						logString = jso.get(DATA).getAsString();
+						logString = jso.get(DATA).asText();
 					}
 				} catch (Exception e) {
 					// must be a simple text response, not json
@@ -165,67 +169,67 @@ public class LogInterface {
 	public String toString() {
 		return "Server " + name;
 	}
-	
-	public String changeLevel(JsonObject logParamJson) {
-				
-		String logString ;
+
+	public String changeLevel(JsonNode logParamJson) {
+
+		String logString;
 		if (putLogApiRequest.isAvailable()) {
-			
+
 			try {
-				
-				logString = putLogApiRequest.send("", logParamJson.toString()) ;
-								
+
+				logString = putLogApiRequest.send("", mapper.writeValueAsString(logParamJson));
+
 			} catch (Exception e) {
-				logString = "Exception in put log send" + e.getMessage() ;
+				logString = "Exception in put log send" + e.getMessage();
 				lLog.log(Level.SEVERE, "Exception in put log send", e);
 			}
-		
+
 		} else {
-			logString = "Connexion to put (change parameters) log API not available" ;
+			logString = "Connexion to put (change parameters) log API not available";
 		}
-		return logString ;
+		return logString;
 
 	}
 	
 	public String getLevels() {
-				
-		String logLevelsString  ;		
-		if (getLevelsLogApiRequest.isAvailable()) {			
-			logLevelsString = getLevelsLogApiRequest.send("", "") ;		
+
+		String logLevelsString;
+		if (getLevelsLogApiRequest.isAvailable()) {
+			logLevelsString = getLevelsLogApiRequest.send("", "");
 		} else {
-			logLevelsString = "Connexion to get levels log API not available" ;
+			logLevelsString = "Connexion to get levels log API not available";
 		}
-		
-		return logLevelsString ;
+
+		return logLevelsString;
 	}
-	
+
 	public String getOperatingInfos(boolean withIpLookUp) {
-		
-		String queryParam ;
+
+		String queryParam;
 		if (withIpLookUp) {
-			queryParam = "?IpLookUp=true" ;
+			queryParam = "?IpLookUp=true";
 		} else {
-			queryParam = "" ;
+			queryParam = "";
 		}
-		String opearatingInfoString  ;		
-		if (getOperatingInfoLogApiRequest.isAvailable()) {			
-			opearatingInfoString = getOperatingInfoLogApiRequest.send(queryParam, "") ;		
+		String opearatingInfoString;
+		if (getOperatingInfoLogApiRequest.isAvailable()) {
+			opearatingInfoString = getOperatingInfoLogApiRequest.send(queryParam, "");
 		} else {
-			opearatingInfoString = "Connexion to get operating infos API not available" ;
+			opearatingInfoString = "Connexion to get operating infos API not available";
 		}
-		
-		return opearatingInfoString ;
+
+		return opearatingInfoString;
 	}
-	
+
 	public String getSmartEnginesInfos() {
-		
-		String smartEnginesInfoString  ;		
-		if (getOperatingInfoLogApiRequest.isAvailable()) {			
-			smartEnginesInfoString = getSmartEngInfoLogApiRequest.send("", "") ;		
+
+		String smartEnginesInfoString;
+		if (getOperatingInfoLogApiRequest.isAvailable()) {
+			smartEnginesInfoString = getSmartEngInfoLogApiRequest.send("", "");
 		} else {
-			smartEnginesInfoString = "Connexion to get smart engines infos API not available" ;
+			smartEnginesInfoString = "Connexion to get smart engines infos API not available";
 		}
-		
-		return smartEnginesInfoString ;
+
+		return smartEnginesInfoString;
 	}
 }
