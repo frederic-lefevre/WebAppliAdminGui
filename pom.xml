@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fl</groupId>
 	<artifactId>WebAppliAdminGui</artifactId>
-	<version>1.11.0</version>
+	<version>1.12.0</version>
 	<name>WebAppliAdminGui</name>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.fl.FlUtils</groupId>
+			<groupId>org.fl</groupId>
 			<artifactId>FlUtils</artifactId>
-			<version>6.1.0</version>
+			<version>6.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.27.2</version>
+			<version>3.27.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
