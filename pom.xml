@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fl</groupId>
 	<artifactId>WebAppliAdminGui</artifactId>
-	<version>1.12.0</version>
+	<version>1.12.1</version>
 	<name>WebAppliAdminGui</name>
 
 	<dependencies>
@@ -67,7 +67,7 @@
 						</manifestEntries>
 						<manifest>
 							<mainClass>
-								com.ibm.lge.fl.webAppliAdmin.gui.AdminGui
+								org.fl.webAppliAdmin.gui.AdminGui
 							</mainClass>
 
 						</manifest>
