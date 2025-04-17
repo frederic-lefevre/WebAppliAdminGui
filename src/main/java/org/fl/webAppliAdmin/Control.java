@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2025 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,8 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
+import java.net.URI;
+
 import org.fl.util.RunningContext;
 
 public class Control {
@@ -39,7 +41,7 @@ public class Control {
 
 	public static void init() {
 		
-		runningContext = new RunningContext("org.fl.webAppliAdmin", null, DEFAULT_PROP_FILE);		
+		runningContext = new RunningContext("org.fl.webAppliAdmin", URI.create(DEFAULT_PROP_FILE));		
 		initialized = true;
 	}
 	
