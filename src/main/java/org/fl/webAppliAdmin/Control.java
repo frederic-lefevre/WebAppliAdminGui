@@ -27,10 +27,9 @@ package org.fl.webAppliAdmin;
 import java.net.URI;
 
 import org.fl.util.RunningContext;
+import org.fl.webAppliAdmin.gui.AdminGui;
 
 public class Control {
-
-	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties";
 	
 	private static RunningContext runningContext;
 	
@@ -39,15 +38,15 @@ public class Control {
 	private Control() {
 	}
 
-	public static void init() {
+	public static void init(String propertyFile) {
 		
-		runningContext = new RunningContext("org.fl.webAppliAdmin", URI.create(DEFAULT_PROP_FILE));		
+		runningContext = new RunningContext("org.fl.webAppliAdmin", URI.create(propertyFile));		
 		initialized = true;
 	}
 	
 	public static RunningContext getRunningContext() {
 		if (!initialized) {
-			init();
+			init(AdminGui.getPropertyFile());
 		}
 		return runningContext;
 	}

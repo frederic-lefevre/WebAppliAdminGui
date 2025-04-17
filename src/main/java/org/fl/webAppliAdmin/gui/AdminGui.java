@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2025 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,10 @@ import org.fl.webAppliAdmin.Control;
 
 public class AdminGui extends JFrame {
 
-
 	private static final long serialVersionUID = 1L;
 
+	private static final String DEFAULT_PROP_FILE = "webAppliAdmin.properties";
+	
 	private static final Logger logger = Logger.getLogger("AdminGui");
 	
 	public static void main(String[] args) {
@@ -56,10 +57,14 @@ public class AdminGui extends JFrame {
 		});
 	}
 	
-	public AdminGui() {
+	public static String getPropertyFile() {
+		return DEFAULT_PROP_FILE;
+	}
+	
+	private AdminGui() {
 
 		// access to properties and logger
-		Control.init();
+		Control.init(DEFAULT_PROP_FILE);
 		RunningContext adminRunningContext = Control.getRunningContext();
 
 		logger.info("Start Administration for web applications");
