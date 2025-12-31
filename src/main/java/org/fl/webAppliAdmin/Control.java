@@ -24,8 +24,6 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
-import java.net.URI;
-
 import org.fl.util.RunningContext;
 import org.fl.webAppliAdmin.gui.AdminGui;
 
@@ -40,7 +38,7 @@ public class Control {
 
 	public static void init(String propertyFile) {
 		
-		runningContext = new RunningContext("org.fl.webAppliAdmin", URI.create(propertyFile));		
+		runningContext = new RunningContext("org.fl.webAppliAdmin", propertyFile);		
 		initialized = true;
 	}
 	
