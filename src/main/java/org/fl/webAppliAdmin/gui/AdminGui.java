@@ -25,6 +25,7 @@ SOFTWARE.
 package org.fl.webAppliAdmin.gui;
 
 import java.awt.EventQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
@@ -64,30 +65,34 @@ public class AdminGui extends JFrame {
 	private AdminGui() {
 
 		// access to properties and logger
-		Control.init(DEFAULT_PROP_FILE);
+		Control.init(getPropertyFile());
 		RunningContext adminRunningContext = Control.getRunningContext();
 
 		logger.info("Start Administration for web applications");
-
-		AdvancedProperties adminProperties = adminRunningContext.getProps();
-		AdvancedProperties apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
-
-		setBounds(20, 20, 1600, 800);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Administration console for web application application");
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-
-		LogGui logGui = new LogGui(apiProperties);
-		LogLevelGui logLevelGui = new LogLevelGui(apiProperties);
-		TesterGui testerGui = new TesterGui(apiProperties);
-
 		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext);
-		operationTab.add(logGui.getLogPanel(), "Get rest api logs", 0);
-		operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
-		operationTab.add(testerGui.getTesterPanel(), "API Request Tester", 2);
 
-		operationTab.setSelectedIndex(0);
+		try {
+			AdvancedProperties adminProperties = adminRunningContext.getProps();
+			AdvancedProperties apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
 
+			setBounds(20, 20, 1600, 800);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setTitle("Administration console for web application application");
+			getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+
+			LogGui logGui = new LogGui(apiProperties);
+			LogLevelGui logLevelGui = new LogLevelGui(apiProperties);
+			TesterGui testerGui = new TesterGui(apiProperties);
+
+			operationTab.add(logGui.getLogPanel(), "Get rest api logs", 0);
+			operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
+			operationTab.add(testerGui.getTesterPanel(), "API Request Tester", 2);
+
+			operationTab.setSelectedIndex(0);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Exception during application startup", e);
+		}
+		
 		getContentPane().add(operationTab);
 	}
 	
