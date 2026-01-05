@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2025 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,8 @@ import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
-import org.fl.util.AdvancedProperties;
 import org.fl.util.RunningContext;
 import org.fl.util.swing.ApplicationTabbedPane;
 import org.fl.webAppliAdmin.Control;
@@ -44,15 +42,19 @@ public class AdminGui extends JFrame {
 	
 	private static final Logger logger = Logger.getLogger("AdminGui");
 	
+	private static RunningContext runningContext;
+	
 	public static void main(String[] args) {
-			
+		
+		getRunningContext();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					AdminGui window = new AdminGui();
 					window.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.log(Level.SEVERE, "Exception while launching application", e);
 				}
 			}
 		});
@@ -62,27 +64,25 @@ public class AdminGui extends JFrame {
 		return DEFAULT_PROP_FILE;
 	}
 	
+	public static RunningContext getRunningContext() {
+		if (runningContext == null) {
+			runningContext = new RunningContext("org.fl.webAppliAdmin", DEFAULT_PROP_FILE);
+		}
+		return runningContext;
+	}
+	
 	private AdminGui() {
 
-		// access to properties and logger
-		Control.init(getPropertyFile());
-		RunningContext adminRunningContext = Control.getRunningContext();
-
 		logger.info("Start Administration for web applications");
-		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(adminRunningContext);
+		setBounds(20, 20, 1600, 800);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Administration console for web application application");
+		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(getRunningContext());
 
 		try {
-			AdvancedProperties adminProperties = adminRunningContext.getProps();
-			AdvancedProperties apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
-
-			setBounds(20, 20, 1600, 800);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setTitle("Administration console for web application application");
-			getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-
-			LogGui logGui = new LogGui(apiProperties);
-			LogLevelGui logLevelGui = new LogLevelGui(apiProperties);
-			TesterGui testerGui = new TesterGui(apiProperties);
+			LogGui logGui = new LogGui(Control.getApiProperties());
+			LogLevelGui logLevelGui = new LogLevelGui(Control.getApiProperties());
+			TesterGui testerGui = new TesterGui(Control.getApiProperties());
 
 			operationTab.add(logGui.getLogPanel(), "Get rest api logs", 0);
 			operationTab.add(logLevelGui.getLogLevelPanel(), "Manage rest api logs", 1);
@@ -95,5 +95,4 @@ public class AdminGui extends JFrame {
 		
 		getContentPane().add(operationTab);
 	}
-	
 }

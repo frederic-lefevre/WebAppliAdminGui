@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,21 +30,16 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
-import org.fl.util.AdvancedProperties;
-
 class ApiEndPointManagerTest {
 
 	@Test
 	void test() {
 
-		AdvancedProperties apiProps = TestUtils.getApiProperties();
-
-		ApiEndPointManager endPointMgr = new ApiEndPointManager(apiProps, "webAppli.tester.endPoint.");
+		ApiEndPointManager endPointMgr = new ApiEndPointManager(Control.getApiProperties(), "webAppli.tester.endPoint.");
 
 		Vector<ApiEndPoint> endPoints = endPointMgr.getApiEndPoints();
 		assertThat(endPoints)
 			.isNotNull()
 			.isNotEmpty();
 	}
-
 }

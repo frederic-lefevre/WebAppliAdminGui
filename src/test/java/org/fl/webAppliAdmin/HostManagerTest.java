@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2024 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,21 +30,16 @@ import java.util.Vector;
 
 import org.junit.jupiter.api.Test;
 
-import org.fl.util.AdvancedProperties;
-
 class HostManagerTest {
 
 	@Test
 	void test() {
-		
-		AdvancedProperties apiProps = TestUtils.getApiProperties();
 
-		HostManager hostMgr = new HostManager(apiProps, "webAppli.tester.host.");
+		HostManager hostMgr = new HostManager(Control.getApiProperties(), "webAppli.tester.host.");
 
 		Vector<Host> hosts = hostMgr.getHosts();
 		assertThat(hosts)
 			.isNotNull()
 			.isNotEmpty();
 	}
-
 }

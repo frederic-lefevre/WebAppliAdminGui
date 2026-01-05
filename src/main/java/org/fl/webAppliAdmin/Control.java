@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2025 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,33 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
+import org.fl.util.AdvancedProperties;
 import org.fl.util.RunningContext;
 import org.fl.webAppliAdmin.gui.AdminGui;
 
 public class Control {
+
+	private AdvancedProperties apiProperties;
 	
-	private static RunningContext runningContext;
+	private static Control instance;
 	
-	private static boolean initialized = false;
+	private static Control getInstance() {
+		if (instance == null) {
+			instance = new Control(AdminGui.getRunningContext());
+		}
+		return instance;
+	}
 	
 	private Control() {
 	}
 
-	public static void init(String propertyFile) {
+	private Control(RunningContext runningContext) {
 		
-		runningContext = new RunningContext("org.fl.webAppliAdmin", propertyFile);		
-		initialized = true;
-	}
-	
-	public static RunningContext getRunningContext() {
-		if (!initialized) {
-			init(AdminGui.getPropertyFile());
-		}
-		return runningContext;
+		AdvancedProperties adminProperties = runningContext.getProps();
+		apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
 	}
 
+	public static AdvancedProperties getApiProperties() {
+		return getInstance().apiProperties;
+	}
 }
