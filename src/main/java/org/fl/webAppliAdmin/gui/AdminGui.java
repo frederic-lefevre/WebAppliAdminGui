@@ -60,10 +60,6 @@ public class AdminGui extends JFrame {
 		});
 	}
 	
-	public static String getPropertyFile() {
-		return DEFAULT_PROP_FILE;
-	}
-	
 	public static RunningContext getRunningContext() {
 		if (runningContext == null) {
 			runningContext = new RunningContext("org.fl.webAppliAdmin", DEFAULT_PROP_FILE);
@@ -73,7 +69,6 @@ public class AdminGui extends JFrame {
 	
 	private AdminGui() {
 
-		logger.info("Start Administration for web applications");
 		setBounds(20, 20, 1600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Administration console for web application application");

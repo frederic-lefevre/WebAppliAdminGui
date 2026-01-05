@@ -24,12 +24,17 @@ SOFTWARE.
 
 package org.fl.webAppliAdmin;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.fl.util.AdvancedProperties;
 import org.fl.util.RunningContext;
 import org.fl.webAppliAdmin.gui.AdminGui;
 
 public class Control {
 
+	private static final Logger logger = Logger.getLogger(Control.class.getName());
+	
 	private AdvancedProperties apiProperties;
 	
 	private static Control instance;
@@ -46,8 +51,12 @@ public class Control {
 
 	private Control(RunningContext runningContext) {
 		
-		AdvancedProperties adminProperties = runningContext.getProps();
-		apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
+		try {
+			AdvancedProperties adminProperties = runningContext.getProps();
+			apiProperties = adminProperties.getPropertiesFromFile("webAppli.configurationFile");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Exception while reading properties", e);
+		}
 	}
 
 	public static AdvancedProperties getApiProperties() {
