@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2025 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.net.URISyntaxException;
 
 import org.fl.util.RunningContext;
+import org.fl.webAppliAdmin.gui.AdminGui;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,7 +42,7 @@ class ControlTest {
 	@Test
 	void runningContextTest() throws URISyntaxException {
 		
-		RunningContext runningContext = Control.getRunningContext();
+		RunningContext runningContext = AdminGui.getRunningContext();
 		
 		assertThat(runningContext).isNotNull();
 		assertThat(runningContext.getName()).isNotNull().isEqualTo(APPLICATION_NAME);
@@ -66,7 +67,7 @@ class ControlTest {
 	@Test
 	void buildInformationTest() throws JsonProcessingException, URISyntaxException {
 		
-		RunningContext runningContext = Control.getRunningContext();
+		RunningContext runningContext = AdminGui.getRunningContext();
 		
 		assertThat(runningContext).isNotNull();
 		
