@@ -1,7 +1,7 @@
 /*
  * MIT License
 
-Copyright (c) 2017, 2025 Frederic Lefevre
+Copyright (c) 2017, 2026 Frederic Lefevre
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,8 @@ import java.util.logging.Logger;
 
 import org.fl.util.AdvancedProperties;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 public class LogInterface {
 	
@@ -121,9 +121,9 @@ public class LogInterface {
 				try {
 					JsonNode jso = mapper.readTree(logString);
 
-					String rc = jso.get(OPERATION).asText();
+					String rc = jso.get(OPERATION).asString();
 					if (rc.equals(OK)) {
-						logString = jso.get(DATA).asText();
+						logString = jso.get(DATA).asString();
 					}
 				} catch (Exception e) {
 					// must be a simple text response, not json
