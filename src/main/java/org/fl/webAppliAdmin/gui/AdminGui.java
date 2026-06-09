@@ -71,7 +71,7 @@ public class AdminGui extends JFrame {
 
 		setBounds(20, 20, 1600, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Administration console for web application application");
+		setTitle("Administration console for web application application  [" + getRunningContext().getVersion() + "]");
 		ApplicationTabbedPane operationTab = new ApplicationTabbedPane(getRunningContext());
 
 		try {
